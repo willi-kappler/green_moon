@@ -232,3 +232,103 @@ fn test_animate_ping_pong() {
     animation.next(100);
     assert_eq!(animation.get_sprite_index(), 20);
 }
+
+#[test]
+fn test_animate_ping_pong_single_rame() {
+    let frames = vec![(20, 100)];
+    let mut animation = AnimationBuilder::new()
+        .animation_type(ANIMATE_ONCE)
+        .set_frames(frames)
+        .build().unwrap();
+
+    // Elapsed time < frame duration, so should not advance
+    animation.next(0);
+    assert_eq!(animation.get_sprite_index(), 20);
+    animation.next(99);
+    assert_eq!(animation.get_sprite_index(), 20);
+
+    // Now the animation should move on, but last frame already reached
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 20);
+    animation.next(50);
+    assert_eq!(animation.get_sprite_index(), 20);
+    animation.next(99);
+    assert_eq!(animation.get_sprite_index(), 20);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 20);
+    animation.next(200);
+    assert_eq!(animation.get_sprite_index(), 20);
+}
+
+#[test]
+fn test_reset() {
+    let frames = vec![(20, 100), (21, 100), (22, 100), (23, 100)];
+    let mut animation = AnimationBuilder::new()
+        .animation_type(ANIMATE_ONCE)
+        .set_frames(frames)
+        .build().unwrap();
+
+    assert_eq!(animation.get_sprite_index(), 20);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 21);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 22);
+
+    // Should restart animation from beginning
+    animation.reset();
+
+    assert_eq!(animation.get_sprite_index(), 20);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 21);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 22);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 23);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 23);
+
+    // Should restart animation from beginning
+    animation.reset();
+
+    assert_eq!(animation.get_sprite_index(), 20);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 21);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 22);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 23);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 23);
+
+}
+
+#[test]
+fn test_pause_resume() {
+    let frames = vec![(20, 100), (21, 100), (22, 100), (23, 100)];
+    let mut animation = AnimationBuilder::new()
+        .animation_type(ANIMATE_ONCE)
+        .set_frames(frames)
+        .build().unwrap();
+
+    assert_eq!(animation.get_sprite_index(), 20);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 21);
+
+    // Animation should not advance after call to pause
+    animation.pause();
+
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 21);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 21);
+
+    // Now it should go on
+    animation.resume();
+
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 22);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 23);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 23);
+}
