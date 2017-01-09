@@ -7,11 +7,14 @@ use canvas::Canvas;
 use animation::Animation;
 use sprite_sheet;
 use sprite_sheet::SpriteSheet;
+use behaviour::Behaviour;
 
 pub struct Game<'a> {
     pub width: u32,
     pub height: u32,
     pub name: String,
+
+    pub all_behaviours: Vec<Box<Behaviour>>,
 
     pub canvas: Canvas<'a>,
 
@@ -43,7 +46,9 @@ impl<'a> Game<'a> {
             sprite.update(dt);
             let ref mut current_animation = self.all_animations[sprite.current_animation];
             sprite.current_animation_frame = current_animation.next(dt, sprite.current_animation_frame);
+            //self.all_behaviours[sprite.current_behaviour].update(sprite, self);
         }
+
     }
 
     pub fn draw_all_sprites(&mut self) {

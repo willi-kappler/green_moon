@@ -19,6 +19,7 @@ pub mod sprite_builder;
 pub mod sprite_sheet;
 pub mod animation;
 pub mod animation_builder;
+pub mod behaviour;
 
 pub use game_builder::GameBuilder;
 pub use game_manager::GameManager;

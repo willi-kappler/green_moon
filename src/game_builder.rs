@@ -11,6 +11,7 @@ use scene_manager::SceneManager;
 use sprite::Sprite;
 use animation::Animation;
 use sprite_sheet::SpriteSheet;
+use behaviour::Behaviour;
 
 error_chain! {
     errors {
@@ -26,6 +27,8 @@ pub struct GameBuilder {
     height: Option<u32>,
     name: Option<String>,
 
+    all_behaviours: Vec<Box<Behaviour>>,
+
     all_scenes: Vec<Box<Scene>>,
     start_scene: usize,
 
@@ -40,6 +43,8 @@ impl GameBuilder {
             width: Some(800),
             height: Some(600),
             name: Some("Made with Green Moon".to_string()),
+
+            all_behaviours: Vec::new(),
 
             all_scenes: Vec::new(),
             start_scene: 0,
@@ -64,6 +69,12 @@ impl GameBuilder {
 
     pub fn add_scene<T: Scene + 'static>(mut self, scene: T) -> GameBuilder {
         self.all_scenes.push(Box::new(scene));
+
+        self
+    }
+
+    pub fn add_behaviour<T: Behaviour + 'static>(mut self, behaviour: T) -> GameBuilder {
+        self.all_behaviours.push(Box::new(behaviour));
 
         self
     }
@@ -102,6 +113,8 @@ impl GameBuilder {
                     width: width,
                     height: height,
                     name: name,
+
+                    all_behaviours: self.all_behaviours,
 
                     canvas: Canvas { renderer: renderer },
                     all_sprites: self.all_sprites,
