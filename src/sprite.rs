@@ -1,19 +1,13 @@
 
 use vector2d::Vector2D;
 
-pub enum Behaviour {
-    None,
-    StopOnBounds,
-    BounceOnBounds,
-    WrapOnBounds,
-}
-
 pub struct Sprite {
     // General
     pub alive: bool,
     pub id: u32,
     pub group: u32,
-    pub behaviour: Behaviour,
+
+    pub current_behaviour: usize,
 
     // Physics
     pub position: Vector2D,
@@ -25,9 +19,7 @@ pub struct Sprite {
     pub height: u32,
 
     // Animation
-    pub sprite_sheets: Vec<usize>,
     pub current_sprite_sheet: usize,
-    pub animations: Vec<usize>,
     pub current_animation: usize,
     pub current_animation_frame: usize,
 }
@@ -75,4 +67,16 @@ impl Sprite {
     }
 
     // TODO acceleration
+
+    pub fn set_behaviour(&mut self, new_behaviour: usize) {
+        self.current_behaviour = new_behaviour;
+    }
+
+    pub fn set_sprite_sheet(&mut self, new_sprite_sheet: usize) {
+        self.current_sprite_sheet = new_sprite_sheet;
+    }
+
+    pub fn set_animation(&mut self, new_animation: usize) {
+        self.current_animation = new_animation;
+    }
 }

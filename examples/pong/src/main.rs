@@ -30,10 +30,9 @@ fn main() {
         .group(BALL_GROUP)
         .position_xy((SCREEN_WIDTH / 2) as f64, (SCREEN_HEIGHT / 2) as f64)
         .velocity_xy(10.0, 10.0)
-        .add_sprite_sheet(BALL_SPRITE_SHEET)
-        .add_animation(BALL_ANIMATION)
-        .build()
-        .unwrap();
+        .sprite_sheet(BALL_SPRITE_SHEET)
+        .animation(BALL_ANIMATION)
+        .build();
 
     let paddle_sprite_sheet = SpriteSheet::new("resources/gfx/paddle_sprite_sheet.png", 64, 64).unwrap();
 
@@ -46,19 +45,17 @@ fn main() {
         .alive(true)
         .group(PADDLE_GROUP)
         .position_xy(0.0, (SCREEN_HEIGHT / 2) as f64)
-        .add_sprite_sheet(PADDLE_SPRITE_SHEET)
-        .add_animation(PADDLE_ANIMATION)
-        .build()
-        .unwrap();
+        .sprite_sheet(PADDLE_SPRITE_SHEET)
+        .animation(PADDLE_ANIMATION)
+        .build();
 
     let paddle_sprite_right = SpriteBuilder::new()
         .alive(true)
         .group(PADDLE_GROUP)
         .position_xy(SCREEN_WIDTH as f64, (SCREEN_HEIGHT / 2) as f64)
-        .add_sprite_sheet(PADDLE_SPRITE_SHEET)
-        .add_animation(PADDLE_ANIMATION)
-        .build()
-        .unwrap();
+        .sprite_sheet(PADDLE_SPRITE_SHEET)
+        .animation(PADDLE_ANIMATION)
+        .build();
 
     let main_scene = MainScene::new();
 
@@ -72,9 +69,11 @@ fn main() {
         .build()
         .unwrap();
 
+    // Load all resources
     my_game.add_sprite_sheet(ball_sprite_sheet); // index 0
     my_game.add_sprite_sheet(paddle_sprite_sheet); // index 1
     my_game.add_animation(ball_animation); // index 0
     my_game.add_animation(paddle_animation); // index 1
+
     my_game.run();
 }

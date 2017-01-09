@@ -8,6 +8,8 @@ use green_moon::{
 use constants::*;
 
 pub struct MainScene {
+    left_player_points: u32,
+    right_player_points: u32,
 }
 
 impl Scene for MainScene {
@@ -62,6 +64,9 @@ impl Scene for MainScene {
 
 impl MainScene {
     pub fn new() -> MainScene {
-        MainScene {}
+        MainScene {
+            left_player_points: 0,
+            right_player_points: 0,
+        }
     }
 }

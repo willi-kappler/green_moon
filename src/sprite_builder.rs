@@ -1,20 +1,13 @@
 
-use sprite::{Sprite, Behaviour};
+use sprite::Sprite;
 use vector2d::Vector2D;
-
-error_chain! {
-    errors {
-        SpriteSheetsUndefined
-        AnimationsUndefined
-    }
-}
 
 pub struct SpriteBuilder {
     // General
     alive: bool,
     id: u32,
     group: u32,
-    behaviour: Behaviour,
+    current_behaviour: usize,
 
     // Physics
     position: Vector2D,
@@ -26,9 +19,7 @@ pub struct SpriteBuilder {
     height: u32,
 
     // Animation
-    sprite_sheets: Vec<usize>,
     current_sprite_sheet: usize,
-    animations: Vec<usize>,
     current_animation: usize,
 }
 
@@ -38,7 +29,7 @@ impl SpriteBuilder {
             alive: false,
             id: 0,
             group: 0,
-            behaviour: Behaviour::None,
+            current_behaviour: 0,
 
             position: Vector2D { x: 0.0, y: 0.0 },
             velocity: Vector2D { x: 0.0, y: 0.0 },
@@ -47,9 +38,7 @@ impl SpriteBuilder {
             width: 0,
             height: 0,
 
-            sprite_sheets: Vec::new(),
             current_sprite_sheet: 0,
-            animations: Vec::new(),
             current_animation: 0,
         }
     }
@@ -95,41 +84,41 @@ impl SpriteBuilder {
         self
     }
 
-    pub fn add_sprite_sheet(mut self, sprite_sheet: usize) -> SpriteBuilder {
-        self.sprite_sheets.push(sprite_sheet);
+    pub fn sprite_sheet(mut self, sprite_sheet: usize) -> SpriteBuilder {
+        self.current_sprite_sheet = sprite_sheet;
 
         self
     }
 
-    pub fn add_animation(mut self, animation: usize) -> SpriteBuilder {
-        self.animations.push(animation);
+    pub fn animation(mut self, animation: usize) -> SpriteBuilder {
+        self.current_animation = animation;
 
         self
     }
 
-    pub fn build(self) -> Result<Sprite> {
-        match self {
-            SpriteBuilder { ref sprite_sheets, .. } if sprite_sheets.is_empty() => Err(ErrorKind::SpriteSheetsUndefined.into()),
-            SpriteBuilder { ref animations, .. } if animations.is_empty() => Err(ErrorKind::AnimationsUndefined.into()),
-            _ => Ok(Sprite {
-                    alive: self.alive,
-                    id: self.id,
-                    group: self.group,
-                    behaviour: self.behaviour,
+    pub fn behaviour(mut self, behaviour: usize) -> SpriteBuilder {
+        self.current_behaviour = behaviour;
 
-                    position: self.position,
-                    velocity: self.velocity,
-                    acceleration: self.acceleration,
+        self
+    }
 
-                    width: self.width,
-                    height: self.height,
+    pub fn build(self) -> Sprite {
+        Sprite {
+            alive: self.alive,
+            id: self.id,
+            group: self.group,
+            current_behaviour: self.current_behaviour,
 
-                    sprite_sheets: self.sprite_sheets,
-                    current_sprite_sheet: self.current_sprite_sheet,
-                    animations: self.animations,
-                    current_animation: self.current_animation,
-                    current_animation_frame: 0,
-            })
+            position: self.position,
+            velocity: self.velocity,
+            acceleration: self.acceleration,
+
+            width: self.width,
+            height: self.height,
+
+            current_sprite_sheet: self.current_sprite_sheet,
+            current_animation: self.current_animation,
+            current_animation_frame: 0,
         }
     }
 }
