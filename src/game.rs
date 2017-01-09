@@ -2,8 +2,7 @@
 use sdl2::{Sdl, EventPump};
 
 // internal:
-use scene::Scene;
-use sprite::{Sprite, Behaviour};
+use sprite::{Sprite};
 use canvas::Canvas;
 
 pub struct Game<'a> {
@@ -22,55 +21,16 @@ pub struct Game<'a> {
 }
 
 impl<'a> Game<'a> {
-
-    pub fn update_all_alive_sprites(&mut self) {
+    pub fn update_all_sprites(&mut self) {
         for sprite in self.all_sprites.iter_mut() {
-            if sprite.alive {
-                sprite.update();
-
-                match sprite.behaviour {
-                    Behaviour::None => {},
-                    Behaviour::StopOnBounds => {
-                        if sprite.position.x <= 0.0 {
-                            sprite.position.x = 0.0;
-                            sprite.velocity.x = 0.0;
-                            sprite.acceleration.x = 0.0;
-                        } else if sprite.position.x >= (self.width - sprite.width) as f64 {
-                            sprite.position.x = (self.width - sprite.width) as f64;
-                            sprite.velocity.x = 0.0;
-                            sprite.acceleration.x = 0.0;
-                        }
-
-                        if sprite.position.y <= 0.0 {
-                            sprite.position.y = 0.0;
-                            sprite.velocity.y = 0.0;
-                            sprite.acceleration.y = 0.0;
-                        } else if sprite.position.y >= (self.height - sprite.height) as f64 {
-                            sprite.position.y = 0.0;
-                            sprite.velocity.y = 0.0;
-                            sprite.acceleration.y = (self.height - sprite.height) as f64;
-                        }
-                    },
-                    Behaviour::BounceOnBounds => {
-
-                    },
-                    Behaviour::WrapOnBounds => {
-
-                    },
-                }
-
-
-            }
+            // TODO: calculate dt
+            sprite.update(0);
         }
     }
 
-    pub fn draw_all_alive_sprites(&mut self) {
-        let ref all_sprites = self.all_sprites;
-
-        for ref sprite in all_sprites {
-            if sprite.alive {
-                self.canvas.draw(&sprite);
-            }
+    pub fn draw_all_sprites(&mut self) {
+        for sprite in self.all_sprites.iter_mut() {
+            sprite.draw();
         }
     }
 

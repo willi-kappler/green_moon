@@ -2,7 +2,8 @@
 use sprite::{Sprite, Behaviour};
 use vector2d::Vector2D;
 use sprite_sheet::SpriteSheet;
-use animation::{Animation, AnimationType, PingPongDirection};
+use animation::{Animation};
+use animation_builder::{AnimationBuilder};
 
 error_chain! {
     errors {
@@ -110,13 +111,8 @@ impl<'a> SpriteBuilder<'a> {
     }
 
     pub fn no_animation(self) -> SpriteBuilder<'a> {
-        let animation = Animation {
-            frames: vec![(0, 0)],
-            current_frame: 0,
-            animation_type: AnimationType::NoAnimation,
-            ping_pong: PingPongDirection::Up,
-        };
-        self.add_animation(animation)
+        let animation = AnimationBuilder::new().add_frame((0, 0));
+        self.add_animation(animation.build().unwrap())
     }
 
     pub fn build(self) -> Result<Sprite<'a>> {

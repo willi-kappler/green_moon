@@ -1,23 +1,24 @@
 
-#[derive(Clone)]
 pub struct Animation {
-    frames: Vec<(usize, u32)>,
-    current_frame: usize,
-    animation_type: Box<AnimationType>,
+    pub frames: Vec<(usize, u32)>,
+    pub current_frame: usize,
+    pub animation_type: Box<AnimationType>,
+    pub paused: bool,
 }
 
 impl Animation {
     pub fn next(&mut self, dt: u32) {
         let current_frame = self.current_frame;
-        let frame_duration = self.frames[current_frame];
+        let (_, frame_duration) = self.frames[current_frame];
         let last_frame = self.frames.len() - 1;
 
-        // Wait until frame_duration milli seconds have passed
-        // before the next frame is shown.
-        if dt >= frame_duration {
-            self.current_frame = animation_type.next(current_frame, last_frame);
+        if !self.paused {
+            // Wait until frame_duration milli seconds have passed
+            // before the next frame is shown.
+            if dt >= frame_duration {
+                self.current_frame = self.animation_type.next(current_frame, last_frame);
+            }
         }
-
     }
 
     pub fn get_sprite_index(&self) -> usize {
@@ -29,9 +30,17 @@ impl Animation {
         self.current_frame = 0 as usize;
     }
 
-    pub fn set_animation_type(&mut self, animation_type: AnimationType) {
+    pub fn set_animation_type<T: AnimationType + 'static>(&mut self, animation_type: T) {
         self.animation_type = Box::new(animation_type);
         self.reset();
+    }
+
+    pub fn pause(&mut self) {
+        self.paused = true;
+    }
+
+    pub fn resume(&mut self) {
+        self.paused = false;
     }
 }
 
@@ -40,14 +49,16 @@ pub trait AnimationType {
 }
 
 // No animation at all, just show a single frame all the time
-struct AnimateNone;
+pub struct AnimateNone;
 
-const ANIMATE_NONE : AnimateNone = AnimateNone {};
+pub const ANIMATE_NONE : AnimateNone = AnimateNone {};
+
+impl AnimationType for AnimateNone {}
 
 // Animation that runs only once and then stays at the last frame.
-struct AnimateOnce;
+pub struct AnimateOnce;
 
-const ANIMATE_ONCE : AnimateOnce = AnimateOnce {};
+pub const ANIMATE_ONCE : AnimateOnce = AnimateOnce {};
 
 impl AnimationType for AnimateOnce {
     fn next(&mut self, current_frame: usize, last_frame: usize) -> usize {
@@ -62,9 +73,9 @@ impl AnimationType for AnimateOnce {
 }
 
 // Animation that runs from the first to the last frame and then starts all over again.
-struct AnimateLoop;
+pub struct AnimateLoop;
 
-const ANIMATE_LOOP : AnimateLoop = AnimateLoop {};
+pub const ANIMATE_LOOP : AnimateLoop = AnimateLoop {};
 
 impl AnimationType for AnimateLoop {
     fn next(&mut self, current_frame: usize, last_frame: usize) -> usize {
@@ -86,15 +97,15 @@ enum PingPongDirection {
 
 // Animation that runs first forewards to the last frame and then backwards to the first frame
 // and then repeats
-struct AnimatePingPong {
+pub struct AnimatePingPong {
     direction: PingPongDirection,
 }
 
-const ANIMATE_PING_PONG : AnimatePingPong = AnimatePingPong { direction: PingPongDirection::Up };
+pub const ANIMATE_PING_PONG : AnimatePingPong = AnimatePingPong { direction: PingPongDirection::Up };
 
 impl AnimationType for AnimatePingPong {
     fn next(&mut self, current_frame: usize, last_frame: usize) -> usize {
-        let direction = self.direction;
+        let direction = self.direction.clone();
 
         match direction {
             PingPongDirection::Up => {

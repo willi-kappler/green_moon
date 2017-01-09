@@ -111,7 +111,7 @@ fn test_no_update() {
         .build()
         .unwrap();
 
-    sprite1.update();
+    sprite1.update(0);
 
     assert_eq!(sprite1.position, Vector2D { x: 370.0, y: 520.0 } );
 }
@@ -129,14 +129,14 @@ fn test_update_velocity() {
         .build()
         .unwrap();
 
-    sprite1.update();
+    sprite1.update(0);
     assert_eq!(sprite1.position, Vector2D { x: 380.0, y: 540.0 } );
 
-    sprite1.update();
+    sprite1.update(0);
     assert_eq!(sprite1.position, Vector2D { x: 390.0, y: 560.0 } );
 
     sprite1.set_velocity_xy(0.0, 0.0);
-    sprite1.update();
+    sprite1.update(0);
     assert_eq!(sprite1.position, Vector2D { x: 390.0, y: 560.0 } );
 }
 
@@ -154,17 +154,17 @@ fn test_update_acceleration() {
         .build()
         .unwrap();
 
-    sprite1.update();
+    sprite1.update(0);
 
     assert_eq!(sprite1.position, Vector2D { x: 380.0, y: 530.0 } );
     assert_eq!(sprite1.velocity, Vector2D { x: 11.0, y: 15.0 } );
 
-    sprite1.update();
+    sprite1.update(0);
 
     assert_eq!(sprite1.position, Vector2D { x: 391.0, y: 545.0 } );
     assert_eq!(sprite1.velocity, Vector2D { x: 12.0, y: 20.0 } );
 
-    sprite1.update();
+    sprite1.update(0);
 
     assert_eq!(sprite1.position, Vector2D { x: 403.0, y: 565.0 } );
     assert_eq!(sprite1.velocity, Vector2D { x: 13.0, y: 25.0 } );

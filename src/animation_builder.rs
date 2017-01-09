@@ -3,7 +3,7 @@ use animation::{Animation, AnimationType, ANIMATE_NONE, ANIMATE_ONCE, ANIMATE_LO
 
 error_chain! {
     errors {
-        AnimationsUndefined
+        FramesUndefined
     }
 }
 
@@ -22,8 +22,8 @@ impl AnimationBuilder {
         }
     }
 
-    pub fn animation_type(mut self, animation_type: AnimationType) -> AnimationBuilder {
-        self.animation_type = animation_type;
+    pub fn animation_type<T: AnimationType + 'static>(mut self, animation_type: T) -> AnimationBuilder {
+        self.animation_type = Box::new(animation_type);
 
         self
     }
@@ -34,17 +34,29 @@ impl AnimationBuilder {
         self
     }
 
-    pub fn add_frames(mut self, frames: Vec<(usize, u32)>) -> AnimationBuilder {
+    pub fn add_frames(mut self, frames: &mut Vec<(usize, u32)>) -> AnimationBuilder {
         self.frames.append(frames);
 
         self
     }
 
+    pub fn set_frames(mut self, frames: Vec<(usize, u32)>) -> AnimationBuilder {
+        self.frames = frames;
+
+        self
+    }
+
     pub fn build(self) -> Result<Animation> {
-        Ok(Animation {
-            frames: self.frames,
-            current_frame: self.current_frame,
-            animation_type: self.animation_type,
-        })
+        match self {
+            AnimationBuilder { ref frames, .. } if frames.is_empty() => Err(ErrorKind::FramesUndefined.into()),
+            _ => {
+                Ok(Animation {
+                    frames: self.frames,
+                    current_frame: self.current_frame,
+                    animation_type: self.animation_type,
+                    paused: false,
+                })
+            }
+        }
     }
 }

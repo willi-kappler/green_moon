@@ -20,9 +20,9 @@ impl SceneManager {
 
             current_scene.draw(game);
 
-            game.update_all_alive_sprites();
+            game.update_all_sprites();
 
-            game.draw_all_alive_sprites();
+            game.draw_all_sprites();
 
             game.canvas.renderer.present();
         }

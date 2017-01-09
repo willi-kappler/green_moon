@@ -1,5 +1,4 @@
 
-use game::Game;
 use vector2d::Vector2D;
 use sprite_sheet::SpriteSheet;
 use animation::Animation;
@@ -36,16 +35,18 @@ pub struct Sprite<'a> {
 }
 
 impl<'a> Sprite<'a> {
-    pub fn update(&mut self) {
+    pub fn update(&mut self, dt: u32) {
         if self.alive {
             self.position += self.velocity;
             self.velocity += self.acceleration;
-            self.animations[self.current_animation].next();
+            self.animations[self.current_animation].next(dt);
         }
     }
 
     pub fn draw(&self) {
-        // TODO
+        if self.alive {
+            // TODO
+        }
     }
 
     pub fn move_to(&mut self, new_position: Vector2D) {
