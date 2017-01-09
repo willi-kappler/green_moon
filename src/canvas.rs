@@ -11,6 +11,6 @@ pub struct Canvas<'a> {
 
 impl<'a> Canvas<'a> {
     pub fn draw(&mut self, sprite: &Sprite) {
-
+        // TODO
     }
 }

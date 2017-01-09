@@ -68,4 +68,12 @@ impl SpriteSheet {
             image_frames: image_frames,
         })
     }
+
+    pub fn empty() -> SpriteSheet {
+        SpriteSheet {
+            tile_width: 0,
+            tile_height: 0,
+            image_frames: Vec::new(),
+        }
+    }
 }
