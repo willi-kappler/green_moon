@@ -299,7 +299,6 @@ fn test_reset() {
     assert_eq!(animation.get_sprite_index(), 23);
     animation.next(100);
     assert_eq!(animation.get_sprite_index(), 23);
-
 }
 
 #[test]
@@ -331,4 +330,25 @@ fn test_pause_resume() {
     assert_eq!(animation.get_sprite_index(), 23);
     animation.next(100);
     assert_eq!(animation.get_sprite_index(), 23);
+}
+
+#[test]
+fn test_add_frame() {
+    let mut animation = AnimationBuilder::new()
+        .animation_type(ANIMATE_ONCE)
+        .add_frame((40, 150))
+        .add_frame((41, 100))
+        .add_frame((42, 180))
+        .add_frame((43, 210))
+        .build().unwrap();
+
+    assert_eq!(animation.get_sprite_index(), 40);
+    animation.next(150);
+    assert_eq!(animation.get_sprite_index(), 41);
+    animation.next(100);
+    assert_eq!(animation.get_sprite_index(), 42);
+    animation.next(150);
+    assert_eq!(animation.get_sprite_index(), 42);
+    animation.next(300);
+    assert_eq!(animation.get_sprite_index(), 43);
 }
