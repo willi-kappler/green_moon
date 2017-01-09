@@ -1,9 +1,8 @@
 
-use animation::{Animation, AnimationType, PingPongDirection};
+use animation::{Animation, AnimationType, ANIMATE_NONE, ANIMATE_ONCE, ANIMATE_LOOP, ANIMATE_PING_PONG};
 
 error_chain! {
     errors {
-        SpriteSheetsUndefined
         AnimationsUndefined
     }
 }
@@ -11,8 +10,7 @@ error_chain! {
 pub struct AnimationBuilder {
     pub frames: Vec<(usize, u32)>,
     pub current_frame: usize,
-    pub animation_type: AnimationType,
-    pub ping_pong: PingPongDirection
+    pub animation_type: Box<AnimationType>,
 }
 
 impl AnimationBuilder {
@@ -20,8 +18,7 @@ impl AnimationBuilder {
         AnimationBuilder {
             frames: Vec::new(),
             current_frame: 0,
-            animation_type: AnimationType::NoAnimation,
-            ping_pong: PingPongDirection::Up,
+            animation_type: Box::new(ANIMATE_NONE),
         }
     }
 
@@ -31,8 +28,14 @@ impl AnimationBuilder {
         self
     }
 
+    pub fn add_frame(mut self, frame:(usize, u32)) -> AnimationBuilder {
+        self.frames.push(frame);
+
+        self
+    }
+
     pub fn add_frames(mut self, frames: Vec<(usize, u32)>) -> AnimationBuilder {
-        self.frames = frames;
+        self.frames.append(frames);
 
         self
     }
@@ -42,7 +45,6 @@ impl AnimationBuilder {
             frames: self.frames,
             current_frame: self.current_frame,
             animation_type: self.animation_type,
-            ping_pong: self.ping_pong
         })
     }
 }
