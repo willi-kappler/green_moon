@@ -123,7 +123,7 @@ impl AnimationType for AnimatePingPong {
                     // Animation not done, move to the previous frame
                     current_frame - 1
                 } else {
-                    // Animation finished, move forewards
+                    // Animation finished, move forwards
                     self.direction = PingPongDirection::Up;
                     current_frame
                 }

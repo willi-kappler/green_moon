@@ -30,7 +30,7 @@ pub use sprite::Sprite;
 pub use sprite_builder::SpriteBuilder;
 pub use vector2d::Vector2D;
 pub use sprite_sheet::SpriteSheet;
-pub use animation::{Animation, AnimationType};
+pub use animation::{Animation, AnimationType, ANIMATE_NONE, ANIMATE_ONCE, ANIMATE_LOOP, ANIMATE_PING_PONG};
 pub use animation_builder::AnimationBuilder;
 
 // From SDL2
