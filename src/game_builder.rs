@@ -9,6 +9,9 @@ use canvas::Canvas;
 use scene::Scene;
 use scene_manager::SceneManager;
 use sprite::Sprite;
+use animation::Animation;
+use sprite_sheet::SpriteSheet;
+use behaviour::Behaviour;
 
 error_chain! {
     errors {
@@ -19,62 +22,76 @@ error_chain! {
     }
 }
 
-pub struct GameBuilder<'a> {
+pub struct GameBuilder {
     width: Option<u32>,
     height: Option<u32>,
     name: Option<String>,
 
+    all_behaviours: Vec<Box<Behaviour>>,
+
     all_scenes: Vec<Box<Scene>>,
     start_scene: usize,
 
-    all_sprites: Vec<Sprite<'a>>,
+    all_sprites: Vec<Sprite>,
+    all_animations: Vec<Animation>,
+    all_sprite_sheets: Vec<SpriteSheet>,
 }
 
-impl<'a> GameBuilder<'a> {
-    pub fn new() -> GameBuilder<'a> {
+impl GameBuilder {
+    pub fn new() -> GameBuilder {
         GameBuilder {
             width: Some(800),
             height: Some(600),
             name: Some("Made with Green Moon".to_string()),
 
+            all_behaviours: Vec::new(),
+
             all_scenes: Vec::new(),
             start_scene: 0,
             all_sprites: Vec::new(),
+            all_animations: Vec::new(),
+            all_sprite_sheets: Vec::new(),
         }
     }
 
-    pub fn size(mut self, width: u32, height: u32) -> GameBuilder<'a> {
+    pub fn size(mut self, width: u32, height: u32) -> GameBuilder {
         self.width = Some(width);
         self.height = Some(height);
 
         self
     }
 
-    pub fn name(mut self, name: &str) -> GameBuilder<'a> {
+    pub fn name(mut self, name: &str) -> GameBuilder {
         self.name = Some(name.to_string());
 
         self
     }
 
-    pub fn add_scene<T: Scene + 'static>(mut self, scene: T) -> GameBuilder<'a> {
+    pub fn add_scene<T: Scene + 'static>(mut self, scene: T) -> GameBuilder {
         self.all_scenes.push(Box::new(scene));
 
         self
     }
 
-    pub fn start_scene(mut self, scene_id: usize) -> GameBuilder<'a> {
+    pub fn add_behaviour<T: Behaviour + 'static>(mut self, behaviour: T) -> GameBuilder {
+        self.all_behaviours.push(Box::new(behaviour));
+
+        self
+    }
+
+    pub fn start_scene(mut self, scene_id: usize) -> GameBuilder {
         self.start_scene = scene_id;
 
         self
     }
 
-    pub fn add_sprite(mut self, sprite: Sprite<'a>) -> GameBuilder<'a> {
+    pub fn add_sprite(mut self, sprite: Sprite) -> GameBuilder {
         self.all_sprites.push(sprite);
 
         self
     }
 
-    pub fn build(self) -> Result<GameManager<'a>> {
+    pub fn build<'a>(self) -> Result<GameManager<'a>> {
         match self {
             GameBuilder { all_scenes: ref scenes, .. } if scenes.is_empty() => Err(ErrorKind::ScenesUndefined.into()),
 
@@ -97,8 +114,12 @@ impl<'a> GameBuilder<'a> {
                     height: height,
                     name: name,
 
+                    all_behaviours: self.all_behaviours,
+
                     canvas: Canvas { renderer: renderer },
                     all_sprites: self.all_sprites,
+                    all_animations: self.all_animations,
+                    all_sprite_sheets: self.all_sprite_sheets,
 
                     context: context,
                     event_pump: event_pump,

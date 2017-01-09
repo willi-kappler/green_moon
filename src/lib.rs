@@ -19,6 +19,7 @@ pub mod sprite_builder;
 pub mod sprite_sheet;
 pub mod animation;
 pub mod animation_builder;
+pub mod behaviour;
 
 pub use game_builder::GameBuilder;
 pub use game_manager::GameManager;
@@ -30,7 +31,7 @@ pub use sprite::Sprite;
 pub use sprite_builder::SpriteBuilder;
 pub use vector2d::Vector2D;
 pub use sprite_sheet::SpriteSheet;
-pub use animation::{Animation, AnimationType};
+pub use animation::{Animation, AnimationType, ANIMATE_NONE, ANIMATE_ONCE, ANIMATE_LOOP, ANIMATE_PING_PONG};
 pub use animation_builder::AnimationBuilder;
 
 // From SDL2

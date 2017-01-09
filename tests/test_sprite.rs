@@ -7,13 +7,10 @@ use green_moon::Vector2D;
 
 #[test]
 fn test_move_to() {
-    let sprite_sheet = SpriteSheet::new("", 0,0).unwrap();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
-        .build()
-        .unwrap();
+        .animation(0)
+        .sprite_sheet(0)
+        .build();
 
     sprite1.move_to(Vector2D { x: 5.0, y: -1.5 } );
     assert_eq!(sprite1.position, Vector2D {x: 5.0, y: -1.5 } );
@@ -24,13 +21,10 @@ fn test_move_to() {
 
 #[test]
 fn test_move_to_xy() {
-    let sprite_sheet = SpriteSheet::new("", 0,0).unwrap();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
-        .build()
-        .unwrap();
+        .animation(0)
+        .sprite_sheet(0)
+        .build();
 
     sprite1.move_to_xy(2.5, 7.5);
 
@@ -39,13 +33,10 @@ fn test_move_to_xy() {
 
 #[test]
 fn test_move_by() {
-    let sprite_sheet = SpriteSheet::new("", 0,0).unwrap();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
-        .build()
-        .unwrap();
+        .animation(0)
+        .sprite_sheet(0)
+        .build();
 
     sprite1.move_by(Vector2D { x: 2.0, y: 5.0 } );
     assert_eq!(sprite1.position, Vector2D { x: 2.0, y: 5.0 } );
@@ -56,13 +47,10 @@ fn test_move_by() {
 
 #[test]
 fn test_move_by_xy() {
-    let sprite_sheet = SpriteSheet::new("", 0,0).unwrap();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
-        .build()
-        .unwrap();
+        .animation(0)
+        .sprite_sheet(0)
+        .build();
 
     sprite1.move_by_xy(47.0, 22.0);
     assert_eq!(sprite1.position, Vector2D { x: 47.0, y: 22.0 } );
@@ -73,13 +61,10 @@ fn test_move_by_xy() {
 
 #[test]
 fn test_set_velocity() {
-    let sprite_sheet = SpriteSheet::new("", 0,0).unwrap();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
-        .build()
-        .unwrap();
+        .animation(0)
+        .sprite_sheet(0)
+        .build();
 
     sprite1.set_velocity(Vector2D { x: 10.0, y: 20.0 } );
     assert_eq!(sprite1.velocity, Vector2D { x: 10.0, y: 20.0 } );
@@ -87,13 +72,10 @@ fn test_set_velocity() {
 
 #[test]
 fn test_set_velocity_xy() {
-    let sprite_sheet = SpriteSheet::new("", 0,0).unwrap();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
-        .build()
-        .unwrap();
+        .animation(0)
+        .sprite_sheet(0)
+        .build();
 
     sprite1.set_velocity_xy(45.0, 88.0);
     assert_eq!(sprite1.velocity, Vector2D { x: 45.0, y: 88.0 } );
@@ -101,70 +83,61 @@ fn test_set_velocity_xy() {
 
 #[test]
 fn test_no_update() {
-    let sprite_sheet = SpriteSheet::new("", 0,0).unwrap();
-
     let mut sprite1 = SpriteBuilder::new()
         .position_xy(370.0, 520.0)
         .velocity_xy(10.0, 20.0)
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
-        .build()
-        .unwrap();
+        .animation(0)
+        .sprite_sheet(0)
+        .build();
 
-    sprite1.update();
+    sprite1.update(0);
 
     assert_eq!(sprite1.position, Vector2D { x: 370.0, y: 520.0 } );
 }
 
 #[test]
 fn test_update_velocity() {
-    let sprite_sheet = SpriteSheet::new("", 0,0).unwrap();
-
     let mut sprite1 = SpriteBuilder::new()
         .alive(true)
         .position_xy(370.0, 520.0)
         .velocity_xy(10.0, 20.0)
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
-        .build()
-        .unwrap();
+        .animation(0)
+        .sprite_sheet(0)
+        .build();
 
-    sprite1.update();
+    sprite1.update(0);
     assert_eq!(sprite1.position, Vector2D { x: 380.0, y: 540.0 } );
 
-    sprite1.update();
+    sprite1.update(0);
     assert_eq!(sprite1.position, Vector2D { x: 390.0, y: 560.0 } );
 
     sprite1.set_velocity_xy(0.0, 0.0);
-    sprite1.update();
+    sprite1.update(0);
     assert_eq!(sprite1.position, Vector2D { x: 390.0, y: 560.0 } );
 }
 
 #[test]
 fn test_update_acceleration() {
-    let sprite_sheet = SpriteSheet::new("", 0,0).unwrap();
-
     let mut sprite1 = SpriteBuilder::new()
         .alive(true)
         .position_xy(370.0, 520.0)
         .velocity_xy(10.0, 10.0)
         .acceleration_xy(1.0, 5.0)
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
-        .build()
-        .unwrap();
+        .animation(0)
+        .sprite_sheet(0)
+        .build();
 
-    sprite1.update();
+    sprite1.update(0);
 
     assert_eq!(sprite1.position, Vector2D { x: 380.0, y: 530.0 } );
     assert_eq!(sprite1.velocity, Vector2D { x: 11.0, y: 15.0 } );
 
-    sprite1.update();
+    sprite1.update(0);
 
     assert_eq!(sprite1.position, Vector2D { x: 391.0, y: 545.0 } );
     assert_eq!(sprite1.velocity, Vector2D { x: 12.0, y: 20.0 } );
 
-    sprite1.update();
+    sprite1.update(0);
 
     assert_eq!(sprite1.position, Vector2D { x: 403.0, y: 565.0 } );
     assert_eq!(sprite1.velocity, Vector2D { x: 13.0, y: 25.0 } );

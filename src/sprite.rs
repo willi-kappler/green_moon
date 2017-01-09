@@ -1,22 +1,13 @@
 
-use game::Game;
 use vector2d::Vector2D;
-use sprite_sheet::SpriteSheet;
-use animation::Animation;
 
-pub enum Behaviour {
-    None,
-    StopOnBounds,
-    BounceOnBounds,
-    WrapOnBounds,
-}
-
-pub struct Sprite<'a> {
+pub struct Sprite {
     // General
     pub alive: bool,
     pub id: u32,
     pub group: u32,
-    pub behaviour: Behaviour,
+
+    pub current_behaviour: usize,
 
     // Physics
     pub position: Vector2D,
@@ -28,24 +19,24 @@ pub struct Sprite<'a> {
     pub height: u32,
 
     // Animation
-    pub sprite_sheets: Vec<&'a SpriteSheet>,
     pub current_sprite_sheet: usize,
-    pub animations: Vec<Animation>,
     pub current_animation: usize,
-
+    pub current_animation_frame: usize,
 }
 
-impl<'a> Sprite<'a> {
-    pub fn update(&mut self) {
+impl Sprite {
+    pub fn update(&mut self, dt: u32) {
         if self.alive {
             self.position += self.velocity;
             self.velocity += self.acceleration;
-            self.animations[self.current_animation].next();
+            // Update animation frame in game object.
         }
     }
 
     pub fn draw(&self) {
-        // TODO
+        if self.alive {
+            // TODO
+        }
     }
 
     pub fn move_to(&mut self, new_position: Vector2D) {
@@ -76,4 +67,16 @@ impl<'a> Sprite<'a> {
     }
 
     // TODO acceleration
+
+    pub fn set_behaviour(&mut self, new_behaviour: usize) {
+        self.current_behaviour = new_behaviour;
+    }
+
+    pub fn set_sprite_sheet(&mut self, new_sprite_sheet: usize) {
+        self.current_sprite_sheet = new_sprite_sheet;
+    }
+
+    pub fn set_animation(&mut self, new_animation: usize) {
+        self.current_animation = new_animation;
+    }
 }
