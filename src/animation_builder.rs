@@ -1,5 +1,5 @@
 
-use animation::{Animation, AnimationType, ANIMATE_NONE, ANIMATE_ONCE, ANIMATE_LOOP, ANIMATE_PING_PONG};
+use animation::{Animation, AnimationType, ANIMATE_NONE};
 
 error_chain! {
     errors {
