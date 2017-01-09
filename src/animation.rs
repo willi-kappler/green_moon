@@ -1,38 +1,29 @@
 
 pub struct Animation {
     pub frames: Vec<(usize, u32)>,
-    pub current_frame: usize,
     pub animation_type: Box<AnimationType>,
     pub paused: bool,
 }
 
 impl Animation {
-    pub fn next(&mut self, dt: u32) {
-        let current_frame = self.current_frame;
+    pub fn next(&mut self, dt: u32, current_frame: usize) -> usize {
         let (_, frame_duration) = self.frames[current_frame];
         let last_frame = self.frames.len() - 1;
 
-        if !self.paused {
+        if (!self.paused) && (dt >= frame_duration) {
             // Wait until frame_duration milli seconds have passed
             // before the next frame is shown.
-            if dt >= frame_duration {
-                self.current_frame = self.animation_type.next(current_frame, last_frame);
-            }
-        }
+            self.animation_type.next(current_frame, last_frame)
+        } else { current_frame }
     }
 
-    pub fn get_sprite_index(&self) -> usize {
-        let (index, _) = self.frames[self.current_frame];
+    pub fn get_sprite_index(&self, current_frame: usize) -> usize {
+        let (index, _) = self.frames[current_frame];
         index
-    }
-
-    pub fn reset(&mut self) {
-        self.current_frame = 0 as usize;
     }
 
     pub fn set_animation_type<T: AnimationType + 'static>(&mut self, animation_type: T) {
         self.animation_type = Box::new(animation_type);
-        self.reset();
     }
 
     pub fn pause(&mut self) {

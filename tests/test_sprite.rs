@@ -7,11 +7,9 @@ use green_moon::Vector2D;
 
 #[test]
 fn test_move_to() {
-    let sprite_sheet = SpriteSheet::empty();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
+        .add_animation(0)
+        .add_sprite_sheet(0)
         .build()
         .unwrap();
 
@@ -24,11 +22,9 @@ fn test_move_to() {
 
 #[test]
 fn test_move_to_xy() {
-    let sprite_sheet = SpriteSheet::empty();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
+        .add_animation(0)
+        .add_sprite_sheet(0)
         .build()
         .unwrap();
 
@@ -39,11 +35,9 @@ fn test_move_to_xy() {
 
 #[test]
 fn test_move_by() {
-    let sprite_sheet = SpriteSheet::empty();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
+        .add_animation(0)
+        .add_sprite_sheet(0)
         .build()
         .unwrap();
 
@@ -56,11 +50,9 @@ fn test_move_by() {
 
 #[test]
 fn test_move_by_xy() {
-    let sprite_sheet = SpriteSheet::empty();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
+        .add_animation(0)
+        .add_sprite_sheet(0)
         .build()
         .unwrap();
 
@@ -73,11 +65,9 @@ fn test_move_by_xy() {
 
 #[test]
 fn test_set_velocity() {
-    let sprite_sheet = SpriteSheet::empty();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
+        .add_animation(0)
+        .add_sprite_sheet(0)
         .build()
         .unwrap();
 
@@ -87,11 +77,9 @@ fn test_set_velocity() {
 
 #[test]
 fn test_set_velocity_xy() {
-    let sprite_sheet = SpriteSheet::empty();
-
     let mut sprite1 = SpriteBuilder::new()
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
+        .add_animation(0)
+        .add_sprite_sheet(0)
         .build()
         .unwrap();
 
@@ -101,13 +89,11 @@ fn test_set_velocity_xy() {
 
 #[test]
 fn test_no_update() {
-    let sprite_sheet = SpriteSheet::empty();
-
     let mut sprite1 = SpriteBuilder::new()
         .position_xy(370.0, 520.0)
         .velocity_xy(10.0, 20.0)
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
+        .add_animation(0)
+        .add_sprite_sheet(0)
         .build()
         .unwrap();
 
@@ -118,14 +104,12 @@ fn test_no_update() {
 
 #[test]
 fn test_update_velocity() {
-    let sprite_sheet = SpriteSheet::empty();
-
     let mut sprite1 = SpriteBuilder::new()
         .alive(true)
         .position_xy(370.0, 520.0)
         .velocity_xy(10.0, 20.0)
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
+        .add_animation(0)
+        .add_sprite_sheet(0)
         .build()
         .unwrap();
 
@@ -142,15 +126,13 @@ fn test_update_velocity() {
 
 #[test]
 fn test_update_acceleration() {
-    let sprite_sheet = SpriteSheet::empty();
-
     let mut sprite1 = SpriteBuilder::new()
         .alive(true)
         .position_xy(370.0, 520.0)
         .velocity_xy(10.0, 10.0)
         .acceleration_xy(1.0, 5.0)
-        .no_animation()
-        .add_sprite_sheet(&sprite_sheet)
+        .add_animation(0)
+        .add_sprite_sheet(0)
         .build()
         .unwrap();
 

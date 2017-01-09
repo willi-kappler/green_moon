@@ -1,9 +1,6 @@
 
 use sprite::{Sprite, Behaviour};
 use vector2d::Vector2D;
-use sprite_sheet::SpriteSheet;
-use animation::{Animation};
-use animation_builder::{AnimationBuilder};
 
 error_chain! {
     errors {
@@ -12,7 +9,7 @@ error_chain! {
     }
 }
 
-pub struct SpriteBuilder<'a> {
+pub struct SpriteBuilder {
     // General
     alive: bool,
     id: u32,
@@ -29,14 +26,14 @@ pub struct SpriteBuilder<'a> {
     height: u32,
 
     // Animation
-    sprite_sheets: Vec<&'a SpriteSheet>,
+    sprite_sheets: Vec<usize>,
     current_sprite_sheet: usize,
-    animations: Vec<Animation>,
+    animations: Vec<usize>,
     current_animation: usize,
 }
 
-impl<'a> SpriteBuilder<'a> {
-    pub fn new() -> SpriteBuilder<'a> {
+impl SpriteBuilder {
+    pub fn new() -> SpriteBuilder {
         SpriteBuilder {
             alive: false,
             id: 0,
@@ -57,19 +54,19 @@ impl<'a> SpriteBuilder<'a> {
         }
     }
 
-    pub fn alive(mut self, alive: bool) -> SpriteBuilder<'a> {
+    pub fn alive(mut self, alive: bool) -> SpriteBuilder {
         self.alive = alive;
 
         self
     }
 
-    pub fn id(mut self, id: u32) -> SpriteBuilder<'a> {
+    pub fn id(mut self, id: u32) -> SpriteBuilder {
         self.id = id;
 
         self
     }
 
-    pub fn group(mut self, group: u32) -> SpriteBuilder<'a> {
+    pub fn group(mut self, group: u32) -> SpriteBuilder {
         self.group = group;
 
         self
@@ -77,45 +74,40 @@ impl<'a> SpriteBuilder<'a> {
 
     // TODO; position, velocity and acceleration with Vector2D
 
-    pub fn position_xy(mut self, x: f64, y: f64) -> SpriteBuilder<'a> {
+    pub fn position_xy(mut self, x: f64, y: f64) -> SpriteBuilder {
         self.position.x = x;
         self.position.y = y;
 
         self
     }
 
-    pub fn velocity_xy(mut self, x: f64, y: f64) -> SpriteBuilder<'a> {
+    pub fn velocity_xy(mut self, x: f64, y: f64) -> SpriteBuilder {
         self.velocity.x = x;
         self.velocity.y = y;
 
         self
     }
 
-    pub fn acceleration_xy(mut self, x: f64, y: f64) -> SpriteBuilder<'a> {
+    pub fn acceleration_xy(mut self, x: f64, y: f64) -> SpriteBuilder {
         self.acceleration.x = x;
         self.acceleration.y = y;
 
         self
     }
 
-    pub fn add_sprite_sheet(mut self, sprite_sheet: &'a SpriteSheet) -> SpriteBuilder<'a> {
+    pub fn add_sprite_sheet(mut self, sprite_sheet: usize) -> SpriteBuilder {
         self.sprite_sheets.push(sprite_sheet);
 
         self
     }
 
-    pub fn add_animation(mut self, animation: Animation) -> SpriteBuilder<'a> {
+    pub fn add_animation(mut self, animation: usize) -> SpriteBuilder {
         self.animations.push(animation);
 
         self
     }
 
-    pub fn no_animation(self) -> SpriteBuilder<'a> {
-        let animation = AnimationBuilder::new().add_frame((0, 0));
-        self.add_animation(animation.build().unwrap())
-    }
-
-    pub fn build(self) -> Result<Sprite<'a>> {
+    pub fn build(self) -> Result<Sprite> {
         match self {
             SpriteBuilder { ref sprite_sheets, .. } if sprite_sheets.is_empty() => Err(ErrorKind::SpriteSheetsUndefined.into()),
             SpriteBuilder { ref animations, .. } if animations.is_empty() => Err(ErrorKind::AnimationsUndefined.into()),
@@ -136,6 +128,7 @@ impl<'a> SpriteBuilder<'a> {
                     current_sprite_sheet: self.current_sprite_sheet,
                     animations: self.animations,
                     current_animation: self.current_animation,
+                    current_animation_frame: 0,
             })
         }
     }

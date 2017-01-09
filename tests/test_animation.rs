@@ -12,15 +12,17 @@ fn test_animate_none() {
         .set_frames(frames)
         .build().unwrap();
 
+    let mut current_frame = 0;
+
     // Should not advance since we have ANIMATE_NONE
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(50);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(200);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(50, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(200, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 }
 
 #[test]
@@ -33,15 +35,17 @@ fn test_animate_none2() {
         .set_frames(frames)
         .build().unwrap();
 
+    let mut current_frame = 0;
+
     // Should not advance since we have ANIMATE_NONE
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(50);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(200);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(50, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(200, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 }
 
 #[test]
@@ -52,33 +56,35 @@ fn test_animate_once() {
         .set_frames(frames)
         .build().unwrap();
 
+    let mut current_frame = 0;
+
     // Elapsed time < frame duration, so should not advance
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 
     // Now the animation should move on
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(50);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 21);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(50, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
 
     // Now the animation should move on
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
 
     // End of animation reached, only the last frame should be shown from now on
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(200);
-    assert_eq!(animation.get_sprite_index(), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(200, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
 }
 
 #[test]
@@ -89,23 +95,25 @@ fn test_animate_once_single_rame() {
         .set_frames(frames)
         .build().unwrap();
 
+    let mut current_frame = 0;
+
     // Elapsed time < frame duration, so should not advance
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 
     // Now the animation should move on, but last frame already reached
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(50);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(200);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(50, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(200, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 }
 
 #[test]
@@ -116,45 +124,47 @@ fn test_animate_loop() {
         .set_frames(frames)
         .build().unwrap();
 
+    let mut current_frame = 0;
+
     // Elapsed time < frame duration, so should not advance
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 
     // Now the animation should move on
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(50);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 21);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(50, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
 
     // Now the animation should move on
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
 
     // End of animation reached, start from beginning
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(200);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(200, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
 }
 
 #[test]
@@ -165,23 +175,25 @@ fn test_animate_loop_single_rame() {
         .set_frames(frames)
         .build().unwrap();
 
+    let mut current_frame = 0;
+
     // Elapsed time < frame duration, so should not advance
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 
     // Now the animation should move on, but last frame already reached
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(50);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(200);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(50, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(200, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 }
 
 #[test]
@@ -192,45 +204,47 @@ fn test_animate_ping_pong() {
         .set_frames(frames)
         .build().unwrap();
 
+    let mut current_frame = 0;
+
     // Elapsed time < frame duration, so should not advance
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 
     // Now the animation should move on
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(50);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 21);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(50, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
 
     // Now the animation should move on
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
 
     // End of animation reached, move backwards
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(200);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(200, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 }
 
 #[test]
@@ -241,64 +255,25 @@ fn test_animate_ping_pong_single_rame() {
         .set_frames(frames)
         .build().unwrap();
 
+    let mut current_frame = 0;
+
     // Elapsed time < frame duration, so should not advance
-    animation.next(0);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 20);
+    current_frame = animation.next(0, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 
     // Now the animation should move on, but last frame already reached
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(50);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(99);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(200);
-    assert_eq!(animation.get_sprite_index(), 20);
-}
-
-#[test]
-fn test_reset() {
-    let frames = vec![(20, 100), (21, 100), (22, 100), (23, 100)];
-    let mut animation = AnimationBuilder::new()
-        .animation_type(ANIMATE_ONCE)
-        .set_frames(frames)
-        .build().unwrap();
-
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-
-    // Should restart animation from beginning
-    animation.reset();
-
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 23);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 23);
-
-    // Should restart animation from beginning
-    animation.reset();
-
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 23);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 23);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(50, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(99, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(200, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
 }
 
 #[test]
@@ -309,27 +284,29 @@ fn test_pause_resume() {
         .set_frames(frames)
         .build().unwrap();
 
-    assert_eq!(animation.get_sprite_index(), 20);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
+    let mut current_frame = 0;
+
+    assert_eq!(animation.get_sprite_index(current_frame), 20);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
 
     // Animation should not advance after call to pause
     animation.pause();
 
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 21);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 21);
 
     // Now it should go on
     animation.resume();
 
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 22);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 23);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 23);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 22);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 23);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 23);
 }
 
 #[test]
@@ -342,13 +319,15 @@ fn test_add_frame() {
         .add_frame((43, 210))
         .build().unwrap();
 
-    assert_eq!(animation.get_sprite_index(), 40);
-    animation.next(150);
-    assert_eq!(animation.get_sprite_index(), 41);
-    animation.next(100);
-    assert_eq!(animation.get_sprite_index(), 42);
-    animation.next(150);
-    assert_eq!(animation.get_sprite_index(), 42);
-    animation.next(300);
-    assert_eq!(animation.get_sprite_index(), 43);
+    let mut current_frame = 0;
+
+    assert_eq!(animation.get_sprite_index(current_frame), 40);
+    current_frame = animation.next(150, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 41);
+    current_frame = animation.next(100, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 42);
+    current_frame = animation.next(150, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 42);
+    current_frame = animation.next(300, current_frame);
+    assert_eq!(animation.get_sprite_index(current_frame), 43);
 }

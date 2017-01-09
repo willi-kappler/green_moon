@@ -1,7 +1,5 @@
 
 use vector2d::Vector2D;
-use sprite_sheet::SpriteSheet;
-use animation::Animation;
 
 pub enum Behaviour {
     None,
@@ -10,7 +8,7 @@ pub enum Behaviour {
     WrapOnBounds,
 }
 
-pub struct Sprite<'a> {
+pub struct Sprite {
     // General
     pub alive: bool,
     pub id: u32,
@@ -27,19 +25,19 @@ pub struct Sprite<'a> {
     pub height: u32,
 
     // Animation
-    pub sprite_sheets: Vec<&'a SpriteSheet>,
+    pub sprite_sheets: Vec<usize>,
     pub current_sprite_sheet: usize,
-    pub animations: Vec<Animation>,
+    pub animations: Vec<usize>,
     pub current_animation: usize,
-
+    pub current_animation_frame: usize,
 }
 
-impl<'a> Sprite<'a> {
+impl Sprite {
     pub fn update(&mut self, dt: u32) {
         if self.alive {
             self.position += self.velocity;
             self.velocity += self.acceleration;
-            self.animations[self.current_animation].next(dt);
+            // Update animation frame in game object.
         }
     }
 

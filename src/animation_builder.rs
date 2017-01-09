@@ -9,7 +9,6 @@ error_chain! {
 
 pub struct AnimationBuilder {
     pub frames: Vec<(usize, u32)>,
-    pub current_frame: usize,
     pub animation_type: Box<AnimationType>,
 }
 
@@ -17,7 +16,6 @@ impl AnimationBuilder {
     pub fn new() -> AnimationBuilder {
         AnimationBuilder {
             frames: Vec::new(),
-            current_frame: 0,
             animation_type: Box::new(ANIMATE_NONE),
         }
     }
@@ -52,7 +50,6 @@ impl AnimationBuilder {
             _ => {
                 Ok(Animation {
                     frames: self.frames,
-                    current_frame: self.current_frame,
                     animation_type: self.animation_type,
                     paused: false,
                 })

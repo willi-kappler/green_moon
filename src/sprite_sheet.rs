@@ -25,12 +25,11 @@ pub struct SpriteSheet {
     tile_height: u32,
     sheet_file: String,
     image_frames: Vec<Texture>,
+    resource_loaded: bool,
 }
 
 impl SpriteSheet {
     pub fn new(sheet_file: &str, tile_width: u32, tile_height: u32) -> Result<SpriteSheet> {
-        let mut image_frames = Vec::new();
-
         if tile_width <= 1 { return Err(ErrorKind::TileWidthZero.into()); }
         if tile_height <= 1 { return Err(ErrorKind::TileHeightZero.into()); }
 
@@ -38,21 +37,12 @@ impl SpriteSheet {
             tile_width: tile_width,
             tile_height: tile_height,
             sheet_file: sheet_file.to_string(),
-            image_frames: image_frames,
+            image_frames: Vec::new(),
+            resource_loaded: false,
         })
     }
 
-    // For testing purposes
-    pub fn empty() -> SpriteSheet {
-        SpriteSheet {
-            tile_width: 0,
-            tile_height: 0,
-            sheet_file: "".to_string(),
-            image_frames: Vec::new(),
-        }
-    }
-
-    pub fn load_sheet(&mut self, canvas: &mut Canvas) -> Result<()>  {
+    pub fn load_resources(&mut self, canvas: &mut Canvas) -> Result<()>  {
         let sheet = canvas.renderer.load_texture(Path::new(&self.sheet_file))?;
         let properties = sheet.query();
 
@@ -80,6 +70,8 @@ impl SpriteSheet {
                 y += self.tile_height;
             }
         }
+
+        self.resource_loaded = true;
 
         Ok(())
     }
