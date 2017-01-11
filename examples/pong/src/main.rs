@@ -13,7 +13,13 @@ mod constants;
 mod scenes;
 
 use constants::{
-
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+    BALL_ID,
+    BALL_GROUP,
+    PADDLE_ID,
+    PADDLE_GROUP,
+    PADDLE_HALF_WIDTH,
 };
 
 use scenes::MainScene;
@@ -45,7 +51,7 @@ fn main() {
     // NO_ANIMATION is the default here
     let paddle_animation = Animation::new().build().unwrap();
 
-    let paddle_sprite_sheet = SpriteSheet::new("resources/gfx/ball.png", 64, 64).unwrap();
+    let paddle_sprite_sheet = SpriteSheet::new("resources/gfx/paddle.png", 64, 64).unwrap();
 
     let paddle_left = Sprite::new()
         .id(PADDLE_ID)
