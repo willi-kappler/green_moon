@@ -48,9 +48,6 @@ fn main() {
         .sprite_sheet(ball_sprite_sheet)
         .build().unwrap();
 
-    // NO_ANIMATION is the default here
-    let paddle_animation = Animation::new().build().unwrap();
-
     let paddle_sprite_sheet = SpriteSheet::new("resources/gfx/paddle.png", 64, 64).unwrap();
 
     let paddle_left = Sprite::new()
@@ -58,7 +55,7 @@ fn main() {
         .group(PADDLE_GROUP)
         .x(PADDLE_HALF_WIDTH)
         .y(WINDOW_HEIGHT / 2)
-        .animation(paddle_animation)
+        .no_animation()
         .sprite_sheet(paddle_sprite_sheet)
         .build().unwrap();
 
@@ -67,7 +64,7 @@ fn main() {
         .group(PADDLE_GROUP)
         .x(WINDOW_WIDTH - PADDLE_HALF_WIDTH)
         .y(WINDOW_HEIGHT / 2)
-        .animation(paddle_animation)
+        .mo_animation()
         .sprite_sheet(paddle_sprite_sheet)
         .build().unwrap();
 
