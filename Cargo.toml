@@ -14,8 +14,5 @@ documentation = "https://docs.rs/green_moon/0.1.0/green_moon/"
 
 [dependencies]
 error-chain = "0.7.2"
+builder_macro = "0.5.1"
 
-[dependencies.sdl2]
-version = "0.27"
-features = ["image"]
-#features = ["ttf","image","gfx","mixer"]

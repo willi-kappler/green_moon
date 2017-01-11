@@ -1,8 +1,7 @@
 [package]
-name = "green_moon_paddle"
+name = "Green Moon Pong"
 version = "0.1.0"
 authors = ["Willi Kappler, grandor@gmx.de"]
 
 [dependencies]
-sdl2 = "0.27"
 green_moon = {path = "../../../green_moon"}
