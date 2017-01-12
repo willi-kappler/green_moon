@@ -15,5 +15,5 @@ pub mod sprite_sheet;
 
 pub use game::Game;
 pub use scene::Scene;
-pub use animation::{Animation, ANIMATE_LOOP};
+pub use animation::{Animation, NO_ANIMATION, ANIMATE_ONCE, ANIMATE_LOOP, ANIMATE_PINGPONG};
 pub use sprite::{Sprite, SpriteBuilder};
