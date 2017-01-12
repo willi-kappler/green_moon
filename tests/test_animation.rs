@@ -190,3 +190,48 @@ fn test_animate_loop() {
     animation.next(100);
     assert_eq!(animation.current_sprite_frame(), 2);
 }
+
+#[test]
+fn test_animate_pingpong() {
+    let mut animation = Animation::new(vec![(0, 100), (1, 100), (2, 100), (3, 100)], ANIMATE_PINGPONG);
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(50);
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 2);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 3);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 3);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 2);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 2);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 3);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 3);
+}
