@@ -12,6 +12,7 @@ pub mod scene;
 pub mod animation;
 pub mod sprite;
 pub mod sprite_sheet;
+pub mod resource_manager;
 
 pub use game::Game;
 pub use scene::Scene;

@@ -1,65 +1,57 @@
 
-
 use sprite::Sprite;
-use sprite_sheet::SpriteSheet;
-use scene::Scene;
+use scene::{SceneManager, Scene};
+use resource_manager::ResourceManager;
 
 pub struct Game {
-    title: String,
-    window_width: u16,
-    window_height: u16,
-
-    sprites: Vec<Sprite>,
-    sprite_sheets: Vec<SpriteSheet>,
-    scenes: Vec<Box<Scene>>,
-
-    current_scene: usize,
+    resource_manager: ResourceManager,
+    scene_manager: SceneManager,
+    game_objects: GameObjects,
 }
 
 impl Game {
     pub fn new(title: &str, window_width: u16, window_height: u16) -> Game {
         Game {
-            title: title.to_string(),
-            window_width: window_width,
-            window_height: window_height,
-
-            sprites: Vec::new(),
-            sprite_sheets: Vec::new(),
-            scenes: Vec::new(),
-
-            current_scene: 0,
+            resource_manager: ResourceManager::new(title, window_width, window_height),
+            scene_manager: SceneManager::new(),
+            game_objects: GameObjects::new(),
         }
     }
 
     pub fn add_sprite(&mut self, sprite: Sprite) {
-        self.sprites.push(sprite)
+        self.game_objects.add_sprite(sprite);
     }
 
     pub fn add_scene<T: Scene + 'static>(&mut self, scene: T) {
-        self.scenes.push(Box::new(scene))
+        self.scene_manager.add_scene(scene);
     }
 
-    pub fn add_sprite_sheet(&mut self, file_name: &str, tile_width: u16, tile_height: u16) {
-        // TODO
+    pub fn add_sprite_sheet(&self, file_name: &str, tile_width: u16, tile_height: u16) {
+        self.resource_manager.add_sprite_sheet(file_name, tile_width, tile_height);
     }
 
-    pub fn load_resources(&mut self, file_name: &str) {
-        // TODO
+    pub fn load_resources(&self, file_name: &str) {
+        self.resource_manager.load_resources(file_name);
     }
 
     pub fn run(&mut self) {
-        let ref mut current_scene = self.scenes[self.current_scene];
-        current_scene.enter();
-        current_scene.leave();
+        self.scene_manager.run(&self.resource_manager, &mut self.game_objects);
+    }
+}
+
+pub struct GameObjects {
+    sprites: Vec<Sprite>,
+}
+
+impl GameObjects {
+    pub fn new() -> GameObjects {
+        GameObjects {
+            sprites: Vec::new(),
+        }
     }
 
-    pub fn change_scene(&mut self, new_scene: usize) {
-        self.current_scene = new_scene;
+    pub fn add_sprite(&mut self, sprite: Sprite) {
+        self.sprites.push(sprite);
     }
 
-    pub fn update_sprites(&mut self) {
-    }
-
-    pub fn draw_sprites(&mut self) {
-    }
 }
