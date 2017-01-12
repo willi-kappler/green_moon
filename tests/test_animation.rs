@@ -4,6 +4,8 @@ use green_moon::{
     Animation,
     NO_ANIMATION,
     ANIMATE_ONCE,
+    ANIMATE_LOOP,
+    ANIMATE_PINGPONG,
 };
 
 #[test]
@@ -40,8 +42,6 @@ fn test_no_animation() {
 
     animation.next(100);
     assert_eq!(animation.current_sprite_frame(), 12);
-
-
 }
 
 #[test]
@@ -117,5 +117,76 @@ fn test_animate_once() {
 
     animation.next(250);
     assert_eq!(animation.current_sprite_frame(), 50);
+}
 
+#[test]
+fn test_animate_loop() {
+    let mut animation = Animation::new(vec![(0, 100), (1, 100), (2, 100), (3, 100)], ANIMATE_LOOP);
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(50);
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 2);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 3);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 2);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 3);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 2);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 3);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 2);
+
+    animation.reset();
+    assert_eq!(animation.current_sprite_frame(), 0);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.pause();
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.resume();
+    assert_eq!(animation.current_sprite_frame(), 1);
+
+    animation.next(100);
+    assert_eq!(animation.current_sprite_frame(), 2);
 }
