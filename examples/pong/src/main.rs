@@ -5,8 +5,7 @@ use green_moon::{
     Game,
     Animation,
     ANIMATE_LOOP,
-    SpriteSheet,
-    Sprite,
+    SpriteBuilder,
 };
 
 mod constants;
@@ -15,10 +14,10 @@ mod scenes;
 use constants::{
     WINDOW_WIDTH,
     WINDOW_HEIGHT,
-    BALL_ID,
     BALL_GROUP,
-    PADDLE_ID,
+    BALL_SPRITE_SHEET,
     PADDLE_GROUP,
+    PADDLE_SPRITE_SHEET,
     PADDLE_HALF_WIDTH,
 };
 
@@ -27,52 +26,37 @@ use scenes::MainScene;
 fn main() {
     println!("Simple pong game written in Rust using the Green Moon game engine");
 
-    let WINDOW_WIDTH = 800;
-    let WINDOW_HEIGHT = 600;
-    let PADDLE_HALF_WIDTH = 16;
-
     // Game objects
-    let ball_animation = Animation::new()
-        .frames(vec![(0, 200), (1, 200), (2, 200), (3, 200)])
-        .type(ANIMATE_LOOP)
-        .build().unwrap();
+    // frames: [(index1, duration1), (index2, duration2), ...], duration in ms.
+    let ball_animation = Animation::new(vec![(0, 200), (1, 200), (2, 200), (3, 200)], ANIMATE_LOOP);
 
-    let ball_sprite_sheet = SpriteSheet::new("resources/gfx/ball.png", 64, 64).unwrap();
-
-    let ball = Sprite::new()
-        .id(BALL_ID)
+    let ball = SpriteBuilder::new()
         .group(BALL_GROUP)
-        .x(WINDOW_WIDTH / 2)
-        .y(WINDOW_HEIGHT / 2)
+        .pos((WINDOW_WIDTH / 2) as f64, (WINDOW_HEIGHT / 2) as f64)
         .animation(ball_animation)
-        .sprite_sheet(ball_sprite_sheet)
-        .build().unwrap();
+        .sprite_sheet(BALL_SPRITE_SHEET)
+        .build();
 
-    let paddle_sprite_sheet = SpriteSheet::new("resources/gfx/paddle.png", 64, 64).unwrap();
-
-    let paddle_left = Sprite::new()
-        .id(PADDLE_ID)
+    let paddle_left = SpriteBuilder::new()
         .group(PADDLE_GROUP)
-        .x(PADDLE_HALF_WIDTH)
-        .y(WINDOW_HEIGHT / 2)
-        .no_animation()
-        .sprite_sheet(paddle_sprite_sheet)
-        .build().unwrap();
+        .pos(PADDLE_HALF_WIDTH as f64, (WINDOW_HEIGHT / 2) as f64)
+        .sprite_sheet(PADDLE_SPRITE_SHEET)
+        .build();
 
-    let paddle_right = Sprite::new()
-        .id(PADDLE_ID)
+    let paddle_right = SpriteBuilder::new()
         .group(PADDLE_GROUP)
-        .x(WINDOW_WIDTH - PADDLE_HALF_WIDTH)
-        .y(WINDOW_HEIGHT / 2)
-        .mo_animation()
-        .sprite_sheet(paddle_sprite_sheet)
-        .build().unwrap();
+        .pos((WINDOW_WIDTH - PADDLE_HALF_WIDTH) as f64, (WINDOW_HEIGHT / 2) as f64)
+        .sprite_sheet(PADDLE_SPRITE_SHEET)
+        .build();
 
-    let game = Game::new("Green Moon Pong", WINDOW_WIDTH, WINDOW_HEIGHT).unwrap();
+    let mut game = Game::new("Green Moon Pong", WINDOW_WIDTH, WINDOW_HEIGHT);
 
     game.add_sprite(ball);
     game.add_sprite(paddle_left);
     game.add_sprite(paddle_right);
+
+    game.add_sprite_sheet("resources/gfx/ball.png", 64, 64);
+    game.add_sprite_sheet("resources/gfx/paddle.png", 64, 64);
 
     game.add_scene(MainScene::new());
 

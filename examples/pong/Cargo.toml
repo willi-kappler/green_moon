@@ -1,5 +1,5 @@
 [package]
-name = "Green Moon Pong"
+name = "green_moon_pong"
 version = "0.1.0"
 authors = ["Willi Kappler, grandor@gmx.de"]
 
