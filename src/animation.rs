@@ -19,6 +19,14 @@ impl Animation {
             current_frame: 0,
         }
     }
+
+    pub fn set_animation_frames(&mut self, frames: Vec<(usize, u16)>) {
+        self.frames = frames;
+    }
+
+    pub fn set_animation_type<T: AnimationType + 'static>(&mut self, animation_type: T) {
+        self.animation_type = Box::new(animation_type);
+    }
 }
 
 pub struct NoAnimation {}

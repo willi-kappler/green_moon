@@ -1,18 +1,9 @@
 use simple_vector2d::Vector2;
 use simple_vector2d::consts::ZERO_F64;
 
-use animation::{Animation, NO_ANIMATION};
+use animation::{Animation, AnimationType, NO_ANIMATION};
 
 pub struct SpriteBuilder {
-    group: u32,
-    pos: Vector2<f64>,
-    vel: Vector2<f64>,
-    animation: Box<Animation>,
-    sprite_sheet: usize,
-    alive: bool,
-}
-
-pub struct Sprite {
     group: u32,
     pos: Vector2<f64>,
     vel: Vector2<f64>,
@@ -69,4 +60,23 @@ impl SpriteBuilder {
         }
     }
 
+}
+
+pub struct Sprite {
+    group: u32,
+    pos: Vector2<f64>,
+    vel: Vector2<f64>,
+    animation: Box<Animation>,
+    sprite_sheet: usize,
+    alive: bool,
+}
+
+impl Sprite {
+    pub fn set_animation_frames(&mut self, frames: Vec<(usize, u16)>) {
+        self.animation.set_animation_frames(frames);
+    }
+
+    pub fn set_animation_type<T: AnimationType + 'static>(&mut self, animation_type: T) {
+        self.animation.set_animation_type(animation_type);
+    }
 }
