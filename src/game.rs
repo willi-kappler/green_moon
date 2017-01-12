@@ -1,4 +1,5 @@
 
+
 use sprite::Sprite;
 use sprite_sheet::SpriteSheet;
 use scene::Scene;
@@ -11,6 +12,8 @@ pub struct Game {
     sprites: Vec<Sprite>,
     sprite_sheets: Vec<SpriteSheet>,
     scenes: Vec<Box<Scene>>,
+
+    current_scene: usize,
 }
 
 impl Game {
@@ -23,6 +26,8 @@ impl Game {
             sprites: Vec::new(),
             sprite_sheets: Vec::new(),
             scenes: Vec::new(),
+
+            current_scene: 0,
         }
     }
 
@@ -42,8 +47,19 @@ impl Game {
         // TODO
     }
 
-    pub fn run(self) {
-        // TODO
+    pub fn run(&mut self) {
+        let ref mut current_scene = self.scenes[self.current_scene];
+        current_scene.enter();
+        current_scene.leave();
     }
 
+    pub fn change_scene(&mut self, new_scene: usize) {
+        self.current_scene = new_scene;
+    }
+
+    pub fn update_sprites(&mut self) {
+    }
+
+    pub fn draw_sprites(&mut self) {
+    }
 }

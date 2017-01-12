@@ -1,11 +1,10 @@
-use game::Game;
 
 pub trait Scene {
-    fn enter(&mut self, game: &mut Game) {}
+    fn enter(&mut self) {}
 
-    fn leave(&mut self, game: &mut Game) {}
+    fn leave(&mut self) {}
 
-    fn update(&mut self, game: &mut Game) -> bool { false }
+    fn update(&mut self) -> bool { false }
 
-    fn draw(&mut self, game: &mut Game) {}
+    fn draw(&mut self) {}
 }

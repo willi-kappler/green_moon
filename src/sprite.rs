@@ -1,7 +1,10 @@
+
 use simple_vector2d::Vector2;
 use simple_vector2d::consts::ZERO_F64;
 
 use animation::{Animation, AnimationType, NO_ANIMATION};
+
+use game::Game;
 
 pub struct SpriteBuilder {
     group: u32,
@@ -18,7 +21,7 @@ impl SpriteBuilder {
             group: 0,
             pos: ZERO_F64,
             vel: ZERO_F64,
-            animation: Box::new(Animation::new(vec![], NO_ANIMATION)),
+            animation: Box::new(Animation::new(vec![(0, 0)], NO_ANIMATION)),
             sprite_sheet: 0,
             alive: true,
         }
@@ -78,5 +81,13 @@ impl Sprite {
 
     pub fn set_animation_type<T: AnimationType + 'static>(&mut self, animation_type: T) {
         self.animation.set_animation_type(animation_type);
+    }
+
+    pub fn update(&mut self) {
+        // TODO
+    }
+
+    pub fn draw(&self) {
+        // TODO
     }
 }
