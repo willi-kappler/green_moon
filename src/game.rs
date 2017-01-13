@@ -2,6 +2,7 @@
 use sprite::Sprite;
 use scene::{SceneManager, Scene};
 use resource_manager::ResourceManager;
+use game_objects::GameObjects;
 
 pub struct Game {
     resource_manager: ResourceManager,
@@ -37,21 +38,4 @@ impl Game {
     pub fn run(mut self) {
         self.scene_manager.run(self.resource_manager, self.game_objects);
     }
-}
-
-pub struct GameObjects {
-    sprites: Vec<Sprite>,
-}
-
-impl GameObjects {
-    pub fn new() -> GameObjects {
-        GameObjects {
-            sprites: Vec::new(),
-        }
-    }
-
-    pub fn add_sprite(&mut self, sprite: Sprite) {
-        self.sprites.push(sprite);
-    }
-
 }

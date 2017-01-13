@@ -13,8 +13,13 @@ pub mod animation;
 pub mod sprite;
 pub mod sprite_sheet;
 pub mod resource_manager;
+pub mod game_objects;
+pub mod canvas;
 
 pub use game::Game;
-pub use scene::Scene;
+pub use game_objects::GameObjects;
+pub use canvas::Canvas;
+pub use scene::{Scene, SceneMessage};
 pub use animation::{Animation, NO_ANIMATION, ANIMATE_ONCE, ANIMATE_LOOP, ANIMATE_PINGPONG};
 pub use sprite::{Sprite, SpriteBuilder};
+pub use resource_manager::ResourceManager;

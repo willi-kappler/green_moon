@@ -1,5 +1,5 @@
 
-use game::GameObjects;
+use game_objects::GameObjects;
 use resource_manager::ResourceManager;
 
 pub enum SceneMessage {

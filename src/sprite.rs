@@ -3,14 +3,15 @@ use simple_vector2d::Vector2;
 use simple_vector2d::consts::ZERO_F64;
 
 use animation::{Animation, AnimationType, NO_ANIMATION};
-
 use game::Game;
+use canvas::Canvas;
+use resource_manager::ResourceManager;
 
 pub struct SpriteBuilder {
     group: u32,
     pos: Vector2<f64>,
     vel: Vector2<f64>,
-    animation: Box<Animation>,
+    animation: Animation,
     sprite_sheet: usize,
     alive: bool,
 }
@@ -21,7 +22,7 @@ impl SpriteBuilder {
             group: 0,
             pos: ZERO_F64,
             vel: ZERO_F64,
-            animation: Box::new(Animation::new(vec![(0, 0)], NO_ANIMATION)),
+            animation: Animation::new(vec![(0, 0)], NO_ANIMATION),
             sprite_sheet: 0,
             alive: true,
         }
@@ -38,7 +39,7 @@ impl SpriteBuilder {
     }
 
     pub fn animation(mut self, animation: Animation) -> Self {
-        self.animation = Box::new(animation);
+        self.animation = animation;
         self
     }
 
@@ -69,7 +70,7 @@ pub struct Sprite {
     group: u32,
     pos: Vector2<f64>,
     vel: Vector2<f64>,
-    animation: Box<Animation>,
+    animation: Animation,
     sprite_sheet: usize,
     alive: bool,
 }
@@ -87,7 +88,7 @@ impl Sprite {
         // TODO
     }
 
-    pub fn draw(&self) {
+    pub fn draw(&self, canvas: &mut Canvas, resource_manager: &ResourceManager) {
         // TODO
     }
 }
