@@ -34,8 +34,8 @@ impl Game {
         self.resource_manager.load_resources(file_name);
     }
 
-    pub fn run(&mut self) {
-        self.scene_manager.run(&self.resource_manager, &mut self.game_objects);
+    pub fn run(mut self) {
+        self.scene_manager.run(self.resource_manager, self.game_objects);
     }
 }
 
