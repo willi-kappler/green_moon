@@ -1,18 +1,23 @@
 
+use sdl2::EventPump;
+use sdl2::render::Renderer;
+
 use sprite::Sprite;
 use canvas::Canvas;
 use resource_manager::ResourceManager;
 
-pub struct GameObjects {
+pub struct GameObjects<'a> {
     sprites: Vec<Sprite>,
-    canvas: Canvas,
+    pub canvas: Canvas<'a>,
+    event_pump: EventPump,
 }
 
-impl GameObjects {
-    pub fn new() -> GameObjects {
+impl<'a> GameObjects<'a> {
+    pub fn new(renderer: Renderer, event_pump: EventPump) -> GameObjects {
         GameObjects {
             sprites: Vec::new(),
-            canvas: Canvas::new(),
+            canvas: Canvas::new(renderer),
+            event_pump: event_pump,
         }
     }
 

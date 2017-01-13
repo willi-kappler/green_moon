@@ -49,7 +49,7 @@ fn main() {
         .sprite_sheet(PADDLE_SPRITE_SHEET)
         .build();
 
-    let mut game = Game::new("Green Moon Pong", WINDOW_WIDTH, WINDOW_HEIGHT);
+    let mut game = Game::new("Green Moon Pong", WINDOW_WIDTH, WINDOW_HEIGHT).unwrap();
 
     game.add_sprite(ball);
     game.add_sprite(paddle_left);

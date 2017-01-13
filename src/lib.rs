@@ -2,8 +2,9 @@
 
 // External crates
 #[macro_use] extern crate error_chain;
-
 extern crate simple_vector2d;
+extern crate sdl2;
+
 
 // Internal
 
