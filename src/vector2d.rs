@@ -1,6 +1,7 @@
 
 use std::ops::{Add, AddAssign, Sub, SubAssign, Mul, Div};
 
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Vector2D {
     pub x: f64,
     pub y: f64,
