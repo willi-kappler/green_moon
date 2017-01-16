@@ -19,8 +19,8 @@ impl SpriteBuilder {
     pub fn new() -> SpriteBuilder {
         SpriteBuilder {
             group: 0,
-            pos: Vector2D { x: 0, y: 0 },
-            vel: Vector2D { x: 0, y: 0 },
+            pos: Vector2D { x: 0.0, y: 0.0 },
+            vel: Vector2D { x: 0.0, y: 0.0 },
             animation: Animation::new(vec![(0, 0)], NO_ANIMATION),
             sprite_sheet: 0,
             alive: true,
@@ -32,7 +32,7 @@ impl SpriteBuilder {
         self
     }
 
-    pub fn pos(mut self, x: i32, y: i32) -> Self {
+    pub fn pos(mut self, x: f64, y: f64) -> Self {
         self.pos = Vector2D { x: x, y: y};
         self
     }
