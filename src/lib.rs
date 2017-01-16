@@ -2,13 +2,7 @@
 
 // External crates
 #[macro_use] extern crate error_chain;
-extern crate simple_vector2d;
 extern crate sdl2;
-
-
-
-type Vec2 = simple_vector2d::Vector2<f64>;
-
 
 pub mod game;
 pub mod scene;
@@ -19,6 +13,7 @@ pub mod resource_manager;
 pub mod game_objects;
 pub mod canvas;
 pub mod bounding_shape;
+pub mod vector2d;
 
 pub use game::Game;
 pub use game_objects::GameObjects;
@@ -28,3 +23,4 @@ pub use animation::{Animation, NO_ANIMATION, ANIMATE_ONCE, ANIMATE_LOOP, ANIMATE
 pub use sprite::{Sprite, SpriteBuilder};
 pub use resource_manager::ResourceManager;
 pub use bounding_shape::BoundingShape;
+pub use vector2d::Vector2D;

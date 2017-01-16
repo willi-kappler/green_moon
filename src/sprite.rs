@@ -1,18 +1,15 @@
 
-use super::Vec2;
-
-use simple_vector2d::consts::ZERO_F64;
-use simple_vector2d::Vector2;
 
 use animation::{Animation, AnimationType, NO_ANIMATION};
 use game::Game;
 use canvas::Canvas;
 use resource_manager::ResourceManager;
+use vector2d::Vector2D;
 
 pub struct SpriteBuilder {
     group: u32,
-    pos: Vec2,
-    vel: Vec2,
+    pos: Vector2D,
+    vel: Vector2D,
     animation: Animation,
     sprite_sheet: usize,
     alive: bool,
@@ -22,8 +19,8 @@ impl SpriteBuilder {
     pub fn new() -> SpriteBuilder {
         SpriteBuilder {
             group: 0,
-            pos: ZERO_F64,
-            vel: ZERO_F64,
+            pos: Vector2D { x: 0, y: 0 },
+            vel: Vector2D { x: 0, y: 0 },
             animation: Animation::new(vec![(0, 0)], NO_ANIMATION),
             sprite_sheet: 0,
             alive: true,
@@ -35,8 +32,8 @@ impl SpriteBuilder {
         self
     }
 
-    pub fn pos(mut self, x: f64, y: f64) -> Self {
-        self.pos = Vector2(x, y);
+    pub fn pos(mut self, x: i32, y: i32) -> Self {
+        self.pos = Vector2D { x: x, y: y};
         self
     }
 
@@ -70,8 +67,8 @@ impl SpriteBuilder {
 
 pub struct Sprite {
     group: u32,
-    pos: Vec2,
-    vel: Vec2,
+    pos: Vector2D,
+    vel: Vector2D,
     animation: Animation,
     sprite_sheet: usize,
     alive: bool,
