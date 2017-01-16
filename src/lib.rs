@@ -6,7 +6,9 @@ extern crate simple_vector2d;
 extern crate sdl2;
 
 
-// Internal
+
+type Vec2 = simple_vector2d::Vector2<f64>;
+
 
 pub mod game;
 pub mod scene;

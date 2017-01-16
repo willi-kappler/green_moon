@@ -1,6 +1,8 @@
 
-use simple_vector2d::Vector2;
+use super::Vec2;
+
 use simple_vector2d::consts::ZERO_F64;
+use simple_vector2d::Vector2;
 
 use animation::{Animation, AnimationType, NO_ANIMATION};
 use game::Game;
@@ -9,8 +11,8 @@ use resource_manager::ResourceManager;
 
 pub struct SpriteBuilder {
     group: u32,
-    pos: Vector2<f64>,
-    vel: Vector2<f64>,
+    pos: Vec2,
+    vel: Vec2,
     animation: Animation,
     sprite_sheet: usize,
     alive: bool,
@@ -68,8 +70,8 @@ impl SpriteBuilder {
 
 pub struct Sprite {
     group: u32,
-    pos: Vector2<f64>,
-    vel: Vector2<f64>,
+    pos: Vec2,
+    vel: Vec2,
     animation: Animation,
     sprite_sheet: usize,
     alive: bool,
