@@ -16,6 +16,7 @@ pub mod sprite_sheet;
 pub mod resource_manager;
 pub mod game_objects;
 pub mod canvas;
+pub mod bounding_shape;
 
 pub use game::Game;
 pub use game_objects::GameObjects;
@@ -24,3 +25,4 @@ pub use scene::{Scene, SceneMessage};
 pub use animation::{Animation, NO_ANIMATION, ANIMATE_ONCE, ANIMATE_LOOP, ANIMATE_PINGPONG};
 pub use sprite::{Sprite, SpriteBuilder};
 pub use resource_manager::ResourceManager;
+pub use bounding_shape::BoundingShape;
