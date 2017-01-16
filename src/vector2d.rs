@@ -49,3 +49,13 @@ impl Div<f64> for Vector2D {
         Vector2D { x: self.x / rhs, y: self.y / rhs }
     }
 }
+
+impl Vector2D {
+    pub fn length(&self) -> f64 {
+        self.length2().sqrt()
+    }
+
+    pub fn length2(&self) -> f64 {
+        self.x.powi(2) + self.y.powi(2)
+    }
+}
