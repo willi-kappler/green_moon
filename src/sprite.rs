@@ -5,10 +5,11 @@ use game::Game;
 use canvas::Canvas;
 use resource_manager::ResourceManager;
 use vector2d::Vector2D;
+use bounding_shape::BoundingShape;
 
 pub struct SpriteBuilder {
     group: u32,
-    pos: Vector2D,
+    bounding_shape: BoundingShape,
     vel: Vector2D,
     animation: Animation,
     sprite_sheet: usize,
@@ -19,7 +20,7 @@ impl SpriteBuilder {
     pub fn new() -> SpriteBuilder {
         SpriteBuilder {
             group: 0,
-            pos: Vector2D { x: 0.0, y: 0.0 },
+            bounding_shape: BoundingShape::NoShape{ position: Vector2D { x: 0.0, y: 0.0 } },
             vel: Vector2D { x: 0.0, y: 0.0 },
             animation: Animation::new(vec![(0, 0)], NO_ANIMATION),
             sprite_sheet: 0,
@@ -31,12 +32,12 @@ impl SpriteBuilder {
         self.group = group;
         self
     }
-
+/*
     pub fn pos(mut self, x: f64, y: f64) -> Self {
         self.pos = Vector2D { x: x, y: y};
         self
     }
-
+*/
     pub fn animation(mut self, animation: Animation) -> Self {
         self.animation = animation;
         self
@@ -55,7 +56,7 @@ impl SpriteBuilder {
     pub fn build(self) -> Sprite {
         Sprite {
             group: self.group,
-            pos: self.pos,
+            bounding_shape: self.bounding_shape,
             vel: self.vel,
             animation: self.animation,
             sprite_sheet: self.sprite_sheet,
@@ -67,7 +68,7 @@ impl SpriteBuilder {
 
 pub struct Sprite {
     group: u32,
-    pos: Vector2D,
+    bounding_shape: BoundingShape,
     vel: Vector2D,
     animation: Animation,
     sprite_sheet: usize,

@@ -13,7 +13,7 @@ documentation = "https://docs.rs/green_moon/0.1.0/green_moon/"
 
 
 [dependencies]
-error-chain = "0.7"
+error-chain = "0.8"
 
 [dependencies.sdl2]
 version = "0.27"

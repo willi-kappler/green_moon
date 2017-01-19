@@ -30,4 +30,10 @@ impl<'a> GameObjects<'a> {
             sprite.draw(&mut self.canvas, resource_manager);
         }
     }
+
+    pub fn update(&mut self) {
+        for sprite in self.sprites.iter_mut() {
+            sprite.update();
+        }
+    }
 }

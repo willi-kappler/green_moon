@@ -13,15 +13,15 @@ pub struct MainScene {
 
 impl Scene for MainScene {
     fn enter(&mut self, resource_manager: &ResourceManager, game_objects: &mut GameObjects) {
-
+        println!("Green Moon Pong: enter main scene");
     }
 
     fn leave(&mut self, resource_manager: &ResourceManager, game_objects: &mut GameObjects) {
-
+        println!("Green Moon Pong: leave main scene");
     }
 
     fn update(&mut self, resource_manager: &ResourceManager, game_objects: &mut GameObjects) -> SceneMessage {
-        SceneMessage::QuitGame
+        SceneMessage::Continue
     }
 
     fn draw(&mut self, resource_manager: &ResourceManager, game_objects: &mut GameObjects) {
