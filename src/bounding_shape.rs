@@ -3,89 +3,97 @@ use vector2d::Vector2D;
 
 /// Type of collision shape
 #[derive(Clone, Copy, Debug, PartialEq)]
-pub enum BoundingShape {
+pub enum ShapeType {
     /// No collision wanted
-    NoShape { position: Vector2D },
+    NoShape,
     /// AA box
-    Rectangle{ position: Vector2D, width: f64, height: f64 },
+    Rectangle{ width: f64, height: f64 },
     /// Circle
-    Circle{ position: Vector2D, radius: f64 },
+    Circle{ radius: f64 },
     /// Arbitrary line
-    Line { position1: Vector2D, position2: Vector2D },
+    Line { position2: Vector2D },
 }
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct BoundingShape {
+    pub position: Vector2D,
+    pub velocity: Vector2D,
+    pub shape_type: ShapeType,
+}
+
+
 pub fn collides(shape1: BoundingShape, shape2: BoundingShape) -> Option<Vector2D> {
-    use BoundingShape::*;
-    match (shape1, shape2) {
+    use self::ShapeType::*;
+    match (shape1.shape_type, shape2.shape_type) {
         (NoShape {..}, _) | (_, NoShape{..}) => None,
 
-        (Rectangle{ position: position1, width: width1, height: height1 },
-         Rectangle{ position: position2, width: width2, height: height2 }) => {
+        (Rectangle{ width: width1, height: height1 },
+         Rectangle{ width: width2, height: height2 }) => {
              // Rectalge2 inside rectangle1 ?
-             let p1 = position1;
-             let p2 = position1 + Vector2D{ x: width1, y: height1 };
-             let diff_vec = position2 - position1;
+             let p1 = shape1.position;
+             let p2 = shape1.position + Vector2D{ x: width1, y: height1 };
+             let diff_vec = shape2.position - shape1.position;
 
 
-             if inside_Rectangle(p1, p2, position2) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, position2 + Vector2D{ x: width2, y: 0.0 }) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, position2 + Vector2D{ x: 0.0, y: height2 }) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, position2 + Vector2D{ x: width2, y: height2 }) { return Some(diff_vec); }
+             if inside_Rectangle(p1, p2, shape2.position) { return Some(diff_vec); }
+             if inside_Rectangle(p1, p2, shape2.position + Vector2D{ x: width2, y: 0.0 }) { return Some(diff_vec); }
+             if inside_Rectangle(p1, p2, shape2.position + Vector2D{ x: 0.0, y: height2 }) { return Some(diff_vec); }
+             if inside_Rectangle(p1, p2, shape2.position + Vector2D{ x: width2, y: height2 }) { return Some(diff_vec); }
 
              // Rectalge1 inside rectangle2 ?
-             let p1 = position2;
-             let p2 = position2 + Vector2D{ x: width2, y: height2 };
-             let diff_vec = position2 - position1;
+             let p1 = shape2.position;
+             let p2 = shape2.position + Vector2D{ x: width2, y: height2 };
+             let diff_vec = shape2.position - shape1.position;
 
 
-             if inside_Rectangle(p1, p2, position1) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, position1 + Vector2D{ x: width1, y: 0.0 }) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, position1 + Vector2D{ x: 0.0, y: height1 }) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, position1 + Vector2D{ x: width1, y: height1 }) { return Some(diff_vec); }
+             if inside_Rectangle(p1, p2, shape1.position) { return Some(diff_vec); }
+             if inside_Rectangle(p1, p2, shape1.position + Vector2D{ x: width1, y: 0.0 }) { return Some(diff_vec); }
+             if inside_Rectangle(p1, p2, shape1.position + Vector2D{ x: 0.0, y: height1 }) { return Some(diff_vec); }
+             if inside_Rectangle(p1, p2, shape1.position + Vector2D{ x: width1, y: height1 }) { return Some(diff_vec); }
 
              None
         },
 
-        (Rectangle{ position: position1, width: width1, height: height1 },
-         Circle{ position: position2, radius: radius2 }) => {
+        (Rectangle{ width: width1, height: height1 },
+         Circle{ radius: radius2 }) => {
              None // TODO
         },
 
-        (Rectangle{ position: position1, width: width1, height: height1 },
-         Line{ position1: position2, position2: position3 }) => {
+        (Rectangle{ width: width1, height: height1 },
+         Line{ position2: position2 }) => {
              None // TODO
         },
 
-        (Circle{ position: position1, radius: radius1 },
-         Rectangle{ position: position2, width: width2, height: height2 }) => {
+        (Circle{ .. },
+         Rectangle{ .. }) => {
              flip_vector(collides(shape2, shape1))
         },
 
-        (Circle{ position: position1, radius: radius1 },
-         Circle{ position: position2, radius: radius2 }) => {
-             let diff_vec = position2 - position1;
+        (Circle{ radius: radius1 },
+         Circle{ radius: radius2 }) => {
+             let diff_vec = shape2.position - shape1.position;
              let diff = diff_vec.length();
              if diff < radius1 + radius2 {
                  Some(diff_vec)
              } else { None }
         },
-        (Circle{ position: position1, radius: radius1 },
-         Line{ position1: position2, position2: position3 }) => {
+        (Circle{ radius: radius1 },
+         Line{ position2: position2 }) => {
              None // TODO
         }
 
-        (Line{ position1: position1, position2: position2 },
-         Rectangle{ position: position3, width: width1, height: height1 }) => {
+        (Line{ .. },
+         Rectangle{ .. }) => {
              flip_vector(collides(shape2, shape1))
         },
 
-        (Line{ position1: position1, position2: position2 },
-         Circle{ position: position3, radius: radius1 }) => {
+        (Line{ .. },
+         Circle{ .. }) => {
              flip_vector(collides(shape2, shape1))
         }
 
-        (Line{ position1: position1, position2: position2 },
-         Line{ position1: position3, position2: position4 }) => {
+        (Line{ position2: position2 },
+         Line{ position2: position4 }) => {
              None // TODO
         }
     }
