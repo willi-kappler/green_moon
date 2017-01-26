@@ -60,7 +60,7 @@ pub fn collides(shape1: BoundingShape, shape2: BoundingShape) -> Option<Vector2D
         },
 
         (Rectangle{ width: width1, height: height1 },
-         Line{ position2: position2 }) => {
+         Line{ position2 }) => {
              None // TODO
         },
 
@@ -78,7 +78,7 @@ pub fn collides(shape1: BoundingShape, shape2: BoundingShape) -> Option<Vector2D
              } else { None }
         },
         (Circle{ radius: radius1 },
-         Line{ position2: position2 }) => {
+         Line{ position2 }) => {
              None // TODO
         }
 
@@ -92,7 +92,7 @@ pub fn collides(shape1: BoundingShape, shape2: BoundingShape) -> Option<Vector2D
              flip_vector(collides(shape2, shape1))
         }
 
-        (Line{ position2: position2 },
+        (Line{ position2 },
          Line{ position2: position4 }) => {
              None // TODO
         }
