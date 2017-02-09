@@ -35,10 +35,10 @@ pub fn collides(shape1: BoundingShape, shape2: BoundingShape) -> Option<Vector2D
              let diff_vec = shape2.position - shape1.position;
 
 
-             if inside_Rectangle(p1, p2, shape2.position) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, shape2.position + Vector2D{ x: width2, y: 0.0 }) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, shape2.position + Vector2D{ x: 0.0, y: height2 }) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, shape2.position + Vector2D{ x: width2, y: height2 }) { return Some(diff_vec); }
+             if inside_rectangle(p1, p2, shape2.position) { return Some(diff_vec); }
+             if inside_rectangle(p1, p2, shape2.position + Vector2D{ x: width2, y: 0.0 }) { return Some(diff_vec); }
+             if inside_rectangle(p1, p2, shape2.position + Vector2D{ x: 0.0, y: height2 }) { return Some(diff_vec); }
+             if inside_rectangle(p1, p2, shape2.position + Vector2D{ x: width2, y: height2 }) { return Some(diff_vec); }
 
              // Rectalge1 inside rectangle2 ?
              let p1 = shape2.position;
@@ -46,10 +46,10 @@ pub fn collides(shape1: BoundingShape, shape2: BoundingShape) -> Option<Vector2D
              let diff_vec = shape2.position - shape1.position;
 
 
-             if inside_Rectangle(p1, p2, shape1.position) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, shape1.position + Vector2D{ x: width1, y: 0.0 }) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, shape1.position + Vector2D{ x: 0.0, y: height1 }) { return Some(diff_vec); }
-             if inside_Rectangle(p1, p2, shape1.position + Vector2D{ x: width1, y: height1 }) { return Some(diff_vec); }
+             if inside_rectangle(p1, p2, shape1.position) { return Some(diff_vec); }
+             if inside_rectangle(p1, p2, shape1.position + Vector2D{ x: width1, y: 0.0 }) { return Some(diff_vec); }
+             if inside_rectangle(p1, p2, shape1.position + Vector2D{ x: 0.0, y: height1 }) { return Some(diff_vec); }
+             if inside_rectangle(p1, p2, shape1.position + Vector2D{ x: width1, y: height1 }) { return Some(diff_vec); }
 
              None
         },
@@ -102,7 +102,7 @@ pub fn collides(shape1: BoundingShape, shape2: BoundingShape) -> Option<Vector2D
 /// p1: top left corner of Rectangle,
 /// p2: bottom right corner of Rectangle,
 /// point: is this point inside the Rectangle ?
-pub fn inside_Rectangle(p1: Vector2D, p2: Vector2D, point: Vector2D) -> bool {
+pub fn inside_rectangle(p1: Vector2D, p2: Vector2D, point: Vector2D) -> bool {
     (point.x >= p1.x && point.x <= p2.x) &&
     (point.y >= p1.y && point.y <= p2.y)
 }

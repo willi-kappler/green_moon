@@ -11,15 +11,7 @@ use green_moon::{
 mod constants;
 mod scenes;
 
-use constants::{
-    WINDOW_WIDTH,
-    WINDOW_HEIGHT,
-    BALL_GROUP,
-    BALL_SPRITE_SHEET,
-    PADDLE_GROUP,
-    PADDLE_SPRITE_SHEET,
-    PADDLE_HALF_WIDTH,
-};
+use constants::*;
 
 use scenes::MainScene;
 

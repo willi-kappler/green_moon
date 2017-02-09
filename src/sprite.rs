@@ -33,12 +33,12 @@ impl SpriteBuilder {
         self.group = group;
         self
     }
-/*
+
     pub fn pos(mut self, x: f64, y: f64) -> Self {
-        self.pos = Vector2D { x: x, y: y};
+        self.bounding_shape.position = Vector2D { x: x, y: y};
         self
     }
-*/
+
     pub fn animation(mut self, animation: Animation) -> Self {
         self.animation = animation;
         self
