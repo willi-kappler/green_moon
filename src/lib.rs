@@ -24,3 +24,7 @@ pub use sprite::{Sprite, SpriteBuilder};
 pub use resource_manager::ResourceManager;
 pub use bounding_shape::{BoundingShape, ShapeType, collides};
 pub use vector2d::Vector2D;
+
+// Re-export from SDL
+pub use sdl2::keyboard::Keycode;
+pub use sdl2::event::Event;

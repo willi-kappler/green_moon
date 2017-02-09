@@ -4,6 +4,8 @@ use green_moon::{
     SceneMessage,
     ResourceManager,
     GameObjects,
+    Keycode,
+    Event,
 };
 
 pub struct MainScene {
@@ -21,7 +23,11 @@ impl Scene for MainScene {
     }
 
     fn update(&mut self, resource_manager: &ResourceManager, game_objects: &mut GameObjects) -> SceneMessage {
-        SceneMessage::Continue
+        if game_objects.key_pressed(Keycode::Escape) || game_objects.has_quit_event() {
+            SceneMessage::QuitGame
+        } else {
+            SceneMessage::Continue
+        }
     }
 
     fn draw(&mut self, resource_manager: &ResourceManager, game_objects: &mut GameObjects) {

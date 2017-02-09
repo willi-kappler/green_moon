@@ -1,6 +1,8 @@
 
 use sdl2::EventPump;
 use sdl2::render::Renderer;
+use sdl2::keyboard::Keycode;
+use sdl2::event::Event;
 
 use sprite::Sprite;
 use canvas::Canvas;
@@ -35,5 +37,44 @@ impl<'a> GameObjects<'a> {
         for sprite in self.sprites.iter_mut() {
             sprite.update();
         }
+    }
+
+    pub fn key_pressed(&mut self, key: Keycode) -> bool {
+        for event in self.event_pump.poll_iter() {
+            match event {
+                Event::KeyDown{keycode: Some(key), ..} => {
+                    return true;
+                }
+                _ => {}
+            }
+        }
+
+        return false;
+    }
+
+    pub fn key_released(&mut self, key: Keycode) -> bool {
+        for event in self.event_pump.poll_iter() {
+            match event {
+                Event::KeyUp{keycode: Some(key), ..} => {
+                    return true;
+                }
+                _ => {}
+            }
+        }
+
+        return false;
+    }
+
+    pub fn has_quit_event(&mut self) -> bool {
+        for event in self.event_pump.poll_iter() {
+            match event {
+                Event::Quit{..} => {
+                    return true;
+                }
+                _ => {}
+            }
+        }
+
+        return false;
     }
 }
