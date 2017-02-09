@@ -21,7 +21,7 @@ impl ResourceManager {
     }
 
     pub fn add_sprite_sheet(&mut self, file_name: &str, tile_width: u16, tile_height: u16) {
-        // TODO
+        self.sprite_sheets.push(SpriteSheet{ tile_width: tile_width, tile_height: tile_height });
     }
 
     pub fn load_resources(&mut self) {
